@@ -1,0 +1,49 @@
+role,keyword_or_root
+include,migration
+include,proliferat
+include,angiogen
+include,morphogenesis
+include,osteoblast
+include,neuron
+include,chondrocyte
+include,myoblast
+include,myogenic
+include,myotube
+include,neural crest
+include,neurogenesis
+include,gliogenesis
+include,oligodendrocyte
+include,astrocyte
+include,cardiomyocyte
+include,cardiac
+include,heart
+include,insulin-like growth factor
+include,mapk cascade
+include,wnt
+include,notch
+include,hedgehog
+include,bmp
+include,fibroblast growth factor
+include,transforming growth factor
+include,retinoic acid
+include,skeletal system
+include,bone development
+include,cartilage development
+include,limb
+include,palate
+include,neural tube
+include,somite
+include,organ morphogenesis
+include,tissue development
+include,epithelial
+include,mesenchym
+include,stem cell
+include,pattern specification
+include,embryo
+exclude,t cell
+exclude,lymphocyte
+exclude,mast cell
+exclude,monocyte
+exclude,interleukin
+exclude,cytokine
+ontology_root,GO:0032502 developmental process (is_a+part_of descendants)

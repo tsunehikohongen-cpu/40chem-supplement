@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+output/
+shap_cache/
+go-basic.obo
+setup_all.pkl
+nes.csv
+ssgsea_NES_GO_Biological_Process_2023.csv
