@@ -74,17 +74,47 @@ comparable.
 pre-built `setup_all.pkl` cache (pickled `{tag: {X_scaled, models,
 feat_names}}`, containing the fitted LR/RF/SVM models and scaled feature
 matrix for each combination) produced by the original model-training
-pipeline, which is not archived here. It is included for methodological
-transparency — to document exactly how the `Contribution` /
-`Contribution_positive` / `Contribution_negative` percentages in
-`results/factor_analysis/CACTUS_ML_*.csv` and `NonCACTUS_ML_*.csv` were
-computed — not as a turnkey pipeline. See the script's module docstring for
-the full method (Shapley-value linearity argument for averaging SHAP across
-classifiers) and the exact `setup_all.pkl` schema it expects.
+pipeline (archived in full in `scripts/ml_pipeline_full/`, see below). It is
+included here for methodological transparency — to document exactly how the
+`Contribution` / `Contribution_positive` / `Contribution_negative`
+percentages in `results/factor_analysis/CACTUS_ML_*.csv` and
+`NonCACTUS_ML_*.csv` were computed — not as a turnkey pipeline. See the
+script's module docstring for the full method (Shapley-value linearity
+argument for averaging SHAP across classifiers) and the exact
+`setup_all.pkl` schema it expects.
 
 Because `shap.KernelExplainer` estimation is expensive, the script is
 time-boxed per invocation (`--time-budget`, default 33 s) and checkpoints
 progress to `--cache-dir`; re-run repeatedly until it prints "ALL COMPLETE".
+
+### `scripts/ml_pipeline_full/` — full ML model-training pipeline
+The original, end-to-end analysis pipeline that produced the CV metrics,
+final-prediction, and SHAP feature-contribution results referenced in the
+manuscript, archived as-is for methodological transparency (not a
+standalone, one-command reproduction — several scripts expect
+manually-prepared inputs and hardcoded local paths; see each script's
+module docstring):
+
+- `compute_cactus_features.py` — CACTUS-equivalent molecular descriptors
+  (LogP, TPSA, MW, QED, BBB heuristic, HBD/HBA, Brenk/PAINS alerts) for the
+  40 chemicals, via PubChem + RDKit.
+- `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` — ML ensemble
+  (LR/SVM/RF) training and cross-validation (StratifiedShuffleSplit,
+  compound-level) for GeneSet1 (150 genes) / GeneSet2 (182 genes) / GeneSet3
+  (190 genes), Non-CACTUS (transcriptomics-only) and CACTUS (multi-modal)
+  modalities.
+- `run_shap_analysis.py` — checkpointed SHAP value computation for the
+  ML ensemble across all 4 modality x gene-set combinations.
+- `run_shap_contribution_export.py` — the original (pre-cleanup) version
+  of the script of the same name in `scripts/`; produces the
+  `results/factor_analysis/*_ML_*.csv` contribution tables from the SHAP
+  cache.
+- `build_gs190_excel.py`, `build_shap_excel.py`, `build_integrated_excel_v6.py`
+  — formatted Excel report builders for the CV metrics and SHAP results.
+- `requirements.txt` — pinned dependency versions for this pipeline
+  specifically (differs from the top-level `requirements.txt`, which
+  covers only `scripts/S1_heterogeneity.py` and
+  `scripts/run_shap_contribution_export.py`).
 
 ### `results/factor_analysis/` — feature-contribution result tables
 Per-feature contribution percentages (`Contribution [%]`,
@@ -100,6 +130,15 @@ sets), for both modeling approaches:
   `Non-CACTUS_NN_GeneSet150.csv`, `Non-CACTUS_NN_GeneSet182.csv` — NN
   factor-analysis contributions (produced by a separate NN pipeline, not
   included in this repository).
+
+### `data/Supplement_Data_1.csv` — GO BP leading-edge gene contributions
+Per-chemical, per-pathway leading-edge gene detail underlying the GO BP
+pathway analysis: for each of the 40 chemicals x enriched GO Biological
+Process term, the contributing genes with their rlog expression delta,
+rank percentile, leading-edge membership (Y/N), and percent contribution to
+the term's enrichment score. Columns: `Chemical, No, Category, GO_term,
+GO_ID, NES, Direction, Gene, Delta_rlog, Rank_percentile, Leading_edge,
+LE_contribution_pct`.
 
 ## License
 

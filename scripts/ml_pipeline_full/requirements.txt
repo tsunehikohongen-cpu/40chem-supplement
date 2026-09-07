@@ -1,0 +1,15 @@
+# Python environment for ML analysis reproducibility
+# Tested on Python 3.10.12
+#
+# Install: pip install -r requirements.txt
+#
+# Note: scikit-learn version affects minor floating-point differences
+# in SVM/RF predictions. Use the pinned version for exact reproduction.
+
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+openpyxl==3.1.5
+scipy==1.15.3
+shap==0.49.1
+rdkit==2026.03.3
