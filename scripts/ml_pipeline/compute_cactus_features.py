@@ -1,155 +1,49 @@
 """
-CACTUS-equivalent molecular descriptor calculation for 40 chemicals.
-Computes: LogP, TPSA, MW, QED, BBB heuristic, HBD, HBA, Brenk/PAINS alert counts.
+CACTUS-equivalent molecular descriptors for the 40 chemicals, computed OFFLINE from the
+curated SMILES in data/Master_chemical_descriptors_40chemicals.csv (one parent-compound
+SMILES per chemical, keyed by chemical number, NOT by name lookup).
+
+Why: a name-based PubChem lookup resolved No. 32 (5-acetylsalicylic acid) to aspirin, and
+the representation of salts/tautomers changed descriptor values (saccharin sodium salt ->
+free acid; imidacloprid nitroamine tautomer). Fixing the SMILES removes both failure modes.
+
+Computes: MW, LogP (Wildman-Crippen), TPSA, HBD, HBA, QED, BBB heuristic (BBB_penetrant,
+BBB_score), Brenk and PAINS alert counts, plus InChIKey and formula.
+Run from the repository root:  python scripts/ml_pipeline/compute_cactus_features.py
+Output: outputs/cactus_features_40chem.csv (column 'compound' = ML pipeline key), and a
+consistency check against the master table.
 """
-import os, requests, json, warnings
+import os
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdMolDescriptors, QED, FilterCatalog
-from rdkit.Chem.FilterCatalog import FilterCatalogParams
-warnings.filterwarnings('ignore')
+from rdkit.Chem.FilterCatalog import FilterCatalogParams as P
 
-# ------------------------------------------------------------------
-# 1. PubChem SMILES retrieval (name→CID fallback for tricky names)
-# ------------------------------------------------------------------
-CHEMICALS = [
-    ('Acitretin',              'name', 'Acitretin'),
-    ('Busulfan',               'name', 'Busulfan'),
-    ('Carbamazepine',          'name', 'Carbamazepine'),
-    ('Cyclophosphamide',       'name', 'Cyclophosphamide'),
-    ('Fluconazole',            'name', 'Fluconazole'),
-    ('5-Fluorouracil',         'name', '5-Fluorouracil'),
-    ('Hydroxyurea',            'name', 'Hydroxyurea'),
-    ('Isotretinoin',           'name', 'Isotretinoin'),
-    ('Methotrexate',           'name', 'Methotrexate'),
-    ('Phenytoin',              'name', 'Phenytoin'),
-    ('Thalidomide',            'name', 'Thalidomide'),
-    ('Topiramate',             'name', 'Topiramate'),
-    ('Tretinoin',              'name', 'Tretinoin'),
-    ('Valproic acid',          'name', 'Valproic acid'),
-    ('Pomalidomide',           'name', 'Pomalidomide'),
-    ('Aspirin',                'name', 'Aspirin'),
-    ('Cytarabine',             'name', 'Cytarabine'),
-    ('Ibuprofen',              'name', 'Ibuprofen'),
-    ('Trimethadione',          'cid',  '5573'),
-    ('Vismodegib',             'cid',  '24776445'),
-    ('Ibrutinib',              'name', 'Ibrutinib'),
-    ('Pazopanib',              'name', 'Pazopanib'),
-    ('Ribavirin',              'name', 'Ribavirin'),
-    ('Tacrolimus',             'name', 'Tacrolimus'),
-    ('Bosentan',               'name', 'Bosentan'),
-    ('Cisplatin',              'name', 'Cisplatin'),
-    ('Dabrafenib',             'name', 'Dabrafenib'),
-    ('Dasatinib',              'name', 'Dasatinib'),
-    ('Imatinib',               'name', 'Imatinib'),
-    # No. 32 is 5-acetylsalicylic acid (5-acetyl-2-hydroxybenzoic acid), NOT aspirin
-    # (2-acetoxybenzoic acid, No. 16). SMILES given explicitly so that a name search
-    # cannot resolve it to aspirin.
-    ('Acetylsalicylic acid',   'smiles', 'CC(=O)C1=CC(=C(C=C1)O)C(=O)O'),
-    ('D-Glucitol',             'cid',  '5780'),
-    ('L-Ascorbic acid',        'name', 'L-Ascorbic acid'),
-    ('Saccharin',              'name', 'Saccharin'),
-    ('Deltamethrin',           'name', 'Deltamethrin'),
-    ("2,2',4,4',5-Pentabromodiphenyl ether", 'cid', '91695'),
-    ('Bisphenol A',            'cid',  '6623'),
-    ('Chlorpyrifos',           'cid',  '2730'),
-    ('Imidacloprid',           'cid',  '86418'),
-    ('Acetaminophen',          'name', 'Acetaminophen'),
-    ('Rotenone',               'name', 'Rotenone'),
-]
+master = pd.read_csv('data/Master_chemical_descriptors_40chemicals.csv')
 
-URL_NAME = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/property/IsomericSMILES,CanonicalSMILES/JSON"
-URL_CID  = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/property/IsomericSMILES,CanonicalSMILES/JSON"
+def catalog(c):
+    p = P(); p.AddCatalog(c); return FilterCatalog.FilterCatalog(p)
+brenk, pains = catalog(P.FilterCatalogs.BRENK), catalog(P.FilterCatalogs.PAINS)
 
-def get_smiles(method, val):
-    if method == 'smiles':
-        return val, None
-    try:
-        if method == 'cid':
-            r = requests.get(URL_CID.format(cid=val), timeout=10)
-        else:
-            r = requests.post(URL_NAME, data={'name': val}, timeout=10)
-        if r.status_code == 200:
-            p = r.json()['PropertyTable']['Properties'][0]
-            return (p.get('IsomericSMILES') or p.get('CanonicalSMILES') or p.get('SMILES', ''),
-                    p.get('CID'))
-    except:
-        pass
-    return None, None
+# key used by run_gs1_gs2_analysis.py (lower-cased); only the two names that differ
+KEY = {'5-Acetylsalicylic acid': 'acetylsalicylic acid',
+       'Saccharin Sodium Salt hydrate': 'saccharin',
+       "BDE-99": "2,2',4,4',5-pentabromodiphenyl ether"}
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
-smiles_map = {}
-with ThreadPoolExecutor(max_workers=10) as ex:
-    futures = {ex.submit(get_smiles, method, val): name for name, method, val in CHEMICALS}
-    for fut in as_completed(futures):
-        name = futures[fut]
-        smi, cid = fut.result()
-        smiles_map[name] = (smi, cid)
-        print(f"{'OK' if smi else 'FAIL'}: {name}")
-
-# ------------------------------------------------------------------
-# 2. RDKit descriptor calculation
-# ------------------------------------------------------------------
-params_brenk = FilterCatalogParams()
-params_brenk.AddCatalog(FilterCatalogParams.FilterCatalogs.BRENK)
-catalog_brenk = FilterCatalog.FilterCatalog(params_brenk)
-
-params_pains = FilterCatalogParams()
-params_pains.AddCatalog(FilterCatalogParams.FilterCatalogs.PAINS)
-catalog_pains = FilterCatalog.FilterCatalog(params_pains)
-
-def bbb_heuristic(mol):
-    """
-    Simple CNS MPO-like BBB penetrant score.
-    BBB+ if MW<400, TPSA<90, cLogP>0, HBD<=3
-    Returns binary (1=penetrant, 0=non-penetrant) + probability-like score 0-1
-    """
-    mw   = Descriptors.MolWt(mol)
-    tpsa = rdMolDescriptors.CalcTPSA(mol)
-    logp = Descriptors.MolLogP(mol)
-    hbd  = rdMolDescriptors.CalcNumHBD(mol)
-    # score = fraction of criteria met (0-4) / 4
-    criteria = [mw < 400, tpsa < 90, logp > 0, hbd <= 3]
-    score = sum(criteria) / len(criteria)
-    penetrant = int(mw < 400 and tpsa < 90)
-    return penetrant, round(score, 3)
-
-records = []
-for name, method, val in CHEMICALS:
-    smi, cid = smiles_map.get(name, (None, None))
-    row = {'compound': name, 'pubchem_cid': cid, 'smiles': smi}
-
-    if smi:
-        mol = Chem.MolFromSmiles(smi)
-    else:
-        mol = None
-
-    if mol is None:
-        print(f"  [WARN] Cannot parse SMILES for {name}")
-        row.update({'MW': None, 'LogP': None, 'TPSA': None,
-                    'HBD': None, 'HBA': None, 'QED': None,
-                    'BBB_penetrant': None, 'BBB_score': None,
-                    'Brenk_alerts': None, 'PAINS_alerts': None})
-    else:
-        bbb_bin, bbb_sc = bbb_heuristic(mol)
-        row.update({
-            'MW':            round(Descriptors.MolWt(mol), 2),
-            'LogP':          round(Descriptors.MolLogP(mol), 3),
-            'TPSA':          round(rdMolDescriptors.CalcTPSA(mol), 2),
-            'HBD':           rdMolDescriptors.CalcNumHBD(mol),
-            'HBA':           rdMolDescriptors.CalcNumHBA(mol),
-            'QED':           round(QED.qed(mol), 4),
-            'BBB_penetrant': bbb_bin,
-            'BBB_score':     bbb_sc,
-            'Brenk_alerts':  len(catalog_brenk.GetMatches(mol)),
-            'PAINS_alerts':  len(catalog_pains.GetMatches(mol)),
-        })
-    records.append(row)
-
-df = pd.DataFrame(records)
-out_path = './outputs/cactus_features_40chem.csv'
-os.makedirs('./outputs', exist_ok=True)
-df.to_csv(out_path, index=False)
-print(f"\nSaved: {out_path}")
-print(f"\nFeature table preview:")
-print(df[['compound','MW','LogP','TPSA','QED','BBB_penetrant','BBB_score','Brenk_alerts','PAINS_alerts']].to_string(index=False))
+rows = []
+for _, r in master.iterrows():
+    m = Chem.MolFromSmiles(r.SMILES)
+    mw, tp = Descriptors.MolWt(m), rdMolDescriptors.CalcTPSA(m)
+    lp, hd = Descriptors.MolLogP(m), rdMolDescriptors.CalcNumHBD(m)
+    crit = [mw < 400, tp < 90, lp > 0, hd <= 3]
+    rows.append({'compound': KEY.get(r.Chemical, r.Chemical.lower()),
+                 'No': r.No, 'smiles': r.SMILES, 'inchikey': Chem.MolToInchiKey(m),
+                 'MW': round(mw, 2), 'LogP': round(lp, 3), 'TPSA': round(tp, 2),
+                 'HBD': hd, 'HBA': rdMolDescriptors.CalcNumHBA(m), 'QED': round(QED.qed(m), 4),
+                 'BBB_penetrant': int(mw < 400 and tp < 90), 'BBB_score': round(sum(crit) / 4, 3),
+                 'Brenk_alerts': len(brenk.GetMatches(m)), 'PAINS_alerts': len(pains.GetMatches(m))})
+df = pd.DataFrame(rows)
+assert df.inchikey.is_unique, 'two chemicals resolved to the same structure'
+os.makedirs('outputs', exist_ok=True)
+df.to_csv('outputs/cactus_features_40chem.csv', index=False)
+print(df[['No', 'compound', 'MW', 'LogP', 'TPSA', 'QED', 'Brenk_alerts']].to_string(index=False))
