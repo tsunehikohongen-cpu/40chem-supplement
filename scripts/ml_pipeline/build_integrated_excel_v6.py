@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import xlsxwriter
 
-OUTPUTS = '/sessions/elegant-beautiful-bell/mnt/outputs'
+OUTPUTS = './outputs'   # directory holding the CV_metrics_* result files written by the run_*_analysis.py scripts
 
 # ── Load CV results ───────────────────────────────────────────────────────────
 def load_cv(path):

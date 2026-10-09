@@ -1,11 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite it as below."
-title: "40chem-supplement: heterogeneity analysis and ML/NN factor-analysis results for the 40-chemical transcriptomics study"
+title: "40chem-supplement: supplementary data and analysis code for the 40-chemical transcriptomics study"
 authors:
   - family-names: "Hongen"
     given-names: "Tsunehiko"
-version: 1.0.0
-date-released: "2026-08-26"
+version: 2.0.0
+date-released: "2026-10-09"
 license: MIT
 repository-code: "https://github.com/tsunehikohongen-cpu/40chem-supplement"
-# doi: 10.5281/zenodo.XXXXXXX   # add after minting the first Zenodo release

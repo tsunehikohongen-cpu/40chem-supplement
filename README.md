@@ -1,11 +1,39 @@
 # 40chem-supplement
 
-Supplementary analysis code and result tables for the 40-chemical
-transcriptomics manuscript: a heterogeneity-quantification figure (GO BP
-NES profile analysis) and the ML/NN factor-analysis (feature contribution)
-results referenced in the Supplement.
+Supplementary data and analysis code for the 40-chemical iPSC transcriptomics
+manuscript (mechanism-of-action structure of human iPSC responses and
+developmental-toxicity prediction).
 
-Companion repository (main figure scripts): [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)
+Companion repository (main-text figure scripts, expression matrix):
+[40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)
+
+## Which file belongs to which Supplementary item?
+
+| Supplementary item | File(s) in this repository |
+|---|---|
+| Supplementary Fig. 1 — NES heterogeneity over all 2,692 GO BP terms | `scripts/Supplementary_Fig_1_NES_heterogeneity.py` |
+| Supplementary Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
+| Supplementary Table 2 — predictive performance of all model configurations | `scripts/ml_pipeline/` (cross-validation and metric tables) |
+| Supplementary Table 4 / Supplementary Data 1 — ssGSEA leading-edge genes of the 30 developmental GO BP terms | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
+| Shared input: ssGSEA NES matrix (2,692 GO BP terms x 40 chemicals) | `data/NES_matrix_GO_BP_2023_40chemicals.csv` |
+
+Supplementary Tables 3, 5, 6 and 7 and Supplementary Fig. 2 are given in the
+Supplementary Information file itself.
+
+## Repository layout
+
+```
+data/
+  Supplementary_Table_1_keyword_list.csv           Supplementary Table 1
+  Supplementary_Data_1_leading_edge.xlsx           Supplementary Data 1 (README, LeadingEdge_summary, per_gene sheets)
+  Supplementary_Data_1_leading_edge_per_gene.csv   Supplementary Data 1, per_gene sheet as a plain CSV
+  NES_matrix_GO_BP_2023_40chemicals.csv            ssGSEA NES matrix used by the scripts (same file as in 40chem-figures)
+scripts/
+  Supplementary_Fig_1_NES_heterogeneity.py
+  Supplementary_Data_1_leading_edge.py
+  fig_style.py                                     shared matplotlib style
+  ml_pipeline/                                     model training / cross-validation pipeline (see below)
+```
 
 ## Setup
 
@@ -15,137 +43,94 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Tested with Python 3.12.
+Tested with Python 3.12. Run all scripts from the repository root; outputs are
+written to `output/` (git-ignored).
 
-## Contents
+## Data files
 
-### `scripts/S1_heterogeneity.py` — Supplementary Figure (heterogeneity)
-Quantifies heterogeneity of ssGSEA NES profiles across the full
-pre-selection GO BP term set (2,692 terms x 40 chemicals), to show that the
-30 development-related pathways used in Figure 2B are not an artifact of
-picking an unusually variable term subset. Three panels:
+- **`NES_matrix_GO_BP_2023_40chemicals.csv`** — single-sample GSEA (ssGSEA)
+  normalized enrichment scores of the 40 chemicals (columns, fixed order:
+  Category 1 (20) | Category 0 (15) | Unknown (5)) for the 2,692 terms of the
+  Enrichr library `GO_Biological_Process_2023` (rows). It is the same file as
+  `data/NES_matrix_GO_BP_2023_40chemicals.csv` in
+  [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures), where
+  `scripts/compute_ssGSEA_NES_matrix.py` regenerates it from the expression
+  matrix. SHA-256: `e49c67fac312cc33453840b2a16d742e591f1b739419fa561ec224c5e13a98aa`.
+- **`Supplementary_Table_1_keyword_list.csv`** — columns `[role, keyword_or_root]`;
+  `role` is `include` (41 keywords), `exclude` (6) or `ontology_root` (GO:0032502).
+- **`Supplementary_Data_1_leading_edge*.{xlsx,csv}`** — for every chemical x
+  developmental GO BP term of the 30-term heatmap (Supplementary Fig. 1a; formerly
+  Fig. 2b of the main text), the leading-edge genes with their rank in the
+  delta-rlog-ordered gene list, delta-rlog and percent contribution to the
+  enrichment score. `per_gene` columns: `chemical, term, gene, rank,
+  delta_rlog, contribution`. The workbook's `README` sheet documents the
+  definitions; `LeadingEdge_summary` has one row per chemical x term.
 
-1. Violin plot of pairwise NES-profile correlations for the 35 labeled
-   chemicals, split into within-category vs. between-category pairs
-   (Mann-Whitney U test).
-2. Compound x compound NES-profile correlation heatmap
-   (Category1 | Category0 | Unknown order).
-3. Histogram of per-term cross-compound NES variance, with keyword-selected
-   and ontology-selected developmental-term medians overlaid.
+## Scripts
 
-**Inputs:**
-- `--nes` — the ssGSEA NES matrix (terms x 40 chemicals), the *same* matrix
-  produced by `2b_Pathway_Heatmap_GO_BP_Development_reproduce.py` in
-  [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)
-  (`output/ssgsea_NES_GO_Biological_Process_2023.csv`). Term names must
-  carry their GO id, e.g. `"... (GO:0001234)"`. Column order must be fixed:
-  Category1 (20 chemicals) | Category0 (15) | Unknown (5).
-- `--keywords` — `data/S1_keyword_list.csv` (included in this repo):
-  columns `[role, keyword_or_root]`, `role` one of `include` / `exclude` /
-  `ontology_root`.
-- `--obo` — `go-basic.obo` (Gene Ontology), not included; download once:
+### `scripts/Supplementary_Fig_1_NES_heterogeneity.py` — Supplementary Fig. 1
+Three panels: (a) heatmap of the 30 developmental GO BP terms with the largest
+cross-chemical NES variance among the 298 keyword-matched terms (Ward /
+Euclidean row clustering); (b) 40 x 40 compound correlation heatmap
+(Category 1 | Category 0 | Unknown); (c) histogram of per-term cross-chemical
+NES variance with keyword-selected and ontology-selected subset medians.
+
+- Inputs: `data/NES_matrix_GO_BP_2023_40chemicals.csv`,
+  `data/Supplementary_Table_1_keyword_list.csv`, and `go-basic.obo`
+  (Gene Ontology, not included; download once):
   ```bash
   curl -L -o go-basic.obo https://current.geneontology.org/ontology/go-basic.obo
   ```
+- Run: `python scripts/Supplementary_Fig_1_NES_heterogeneity.py`
+- Output: `output/Supplementary_Fig_1_NES_heterogeneity.{png,pdf}` (600 dpi)
 
-**Run:**
-```bash
-python scripts/S1_heterogeneity.py \
-  --nes path/to/ssgsea_NES_GO_Biological_Process_2023.csv \
-  --keywords data/S1_keyword_list.csv \
-  --obo go-basic.obo \
-  --out output/SX_heterogeneity.png
-```
+### `scripts/Supplementary_Data_1_leading_edge.py` — Supplementary Data 1
+Re-walks the delta-rlog-ranked gene list of every chemical for each of the 30
+developmental terms (ssGSEA running sum, hit weight = |delta-rlog|^0.25),
+locates the peak and extracts the leading-edge genes.
 
-**Output:** `SX_heterogeneity.png` (600 dpi by default; `--dpi` to change),
-plus console output of term counts, the within/between correlation medians
-and Mann-Whitney p-value, and the variance medians (all terms vs. ontology-
-vs. keyword-selected subsets).
+- Inputs: `40_Chem_DESeq_normalized.csv` (expression matrix; shipped in
+  [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)`/data/`;
+  copy it to `data/` here), `data/NES_matrix_GO_BP_2023_40chemicals.csv`,
+  `data/Supplementary_Table_1_keyword_list.csv`. `gseapy` downloads the
+  `GO_Biological_Process_2023` library from Enrichr (internet required).
+- Run: `python scripts/Supplementary_Data_1_leading_edge.py`
+- Output: `output/Supplementary_Data_1_leading_edge.xlsx` and
+  `output/Supplementary_Data_1_leading_edge_per_gene.csv` (the files in `data/`
+  are the versions deposited with the manuscript).
+- Note: genes with exactly identical delta-rlog values (e.g. non-expressed genes)
+  have no defined order, so a re-run can differ from the deposited file in the
+  rank/label of such tied genes (about 2.5% of rows) and in the ES at peak
+  (by <= 0.004); delta-rlog and contribution values, gene-set sizes and
+  leading-edge sizes are identical.
 
-### `scripts/run_shap_contribution_export.py` — ML SHAP feature-contribution export
-Computes, per gene-set/CACTUS-status combination, each feature's percent
-contribution to the ML ensemble's (LR + SVM + RF) predicted probability of
-Category 1, using SHAP values placed on a common (probability) scale and
-averaged across the three classifiers. Output format matches the NN
-factor-analysis CSVs in `results/factor_analysis/` so both are directly
-comparable.
+### `scripts/ml_pipeline/` — model training and evaluation pipeline
+The end-to-end pipeline behind the classifier results (Supplementary Table 2),
+archived as used for the manuscript. Several scripts expect manually prepared
+inputs in `./inputs` and write to `./outputs` (see each script's header);
+this is an archive for transparency rather than a one-command reproduction.
 
-**This script cannot be run standalone in this repository.** It consumes a
-pre-built `setup_all.pkl` cache (pickled `{tag: {X_scaled, models,
-feat_names}}`, containing the fitted LR/RF/SVM models and scaled feature
-matrix for each combination) produced by the original model-training
-pipeline (archived in full in `scripts/ml_pipeline_full/`, see below). It is
-included here for methodological transparency — to document exactly how the
-`Contribution` / `Contribution_positive` / `Contribution_negative`
-percentages in `results/factor_analysis/CACTUS_ML_*.csv` and
-`NonCACTUS_ML_*.csv` were computed — not as a turnkey pipeline. See the
-script's module docstring for the full method (Shapley-value linearity
-argument for averaging SHAP across classifiers) and the exact
-`setup_all.pkl` schema it expects.
-
-Because `shap.KernelExplainer` estimation is expensive, the script is
-time-boxed per invocation (`--time-budget`, default 33 s) and checkpoints
-progress to `--cache-dir`; re-run repeatedly until it prints "ALL COMPLETE".
-
-### `scripts/ml_pipeline_full/` — full ML model-training pipeline
-The original, end-to-end analysis pipeline that produced the CV metrics,
-final-prediction, and SHAP feature-contribution results referenced in the
-manuscript, archived as-is for methodological transparency (not a
-standalone, one-command reproduction — several scripts expect
-manually-prepared inputs and hardcoded local paths; see each script's
-module docstring):
-
-- `compute_cactus_features.py` — CACTUS-equivalent molecular descriptors
-  (LogP, TPSA, MW, QED, BBB heuristic, HBD/HBA, Brenk/PAINS alerts) for the
-  40 chemicals, via PubChem + RDKit.
-- `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` — ML ensemble
-  (LR/SVM/RF) training and cross-validation (StratifiedShuffleSplit,
-  compound-level) for GeneSet1 (150 genes) / GeneSet2 (182 genes) / GeneSet3
-  (190 genes), Non-CACTUS (transcriptomics-only) and CACTUS (multi-modal)
-  modalities.
-- `run_shap_analysis.py` — checkpointed SHAP value computation for the
-  ML ensemble across all 4 modality x gene-set combinations.
-- `run_shap_contribution_export.py` — the original (pre-cleanup) version
-  of the script of the same name in `scripts/`; produces the
-  `results/factor_analysis/*_ML_*.csv` contribution tables from the SHAP
-  cache.
-- `build_gs190_excel.py`, `build_shap_excel.py`, `build_integrated_excel_v6.py`
-  — formatted Excel report builders for the CV metrics and SHAP results.
-- `requirements.txt` — pinned dependency versions for this pipeline
-  specifically (differs from the top-level `requirements.txt`, which
-  covers only `scripts/S1_heterogeneity.py` and
-  `scripts/run_shap_contribution_export.py`).
-
-### `results/factor_analysis/` — feature-contribution result tables
-Per-feature contribution percentages (`Contribution [%]`,
-`Contribution_positive [%]`, `Contribution_negative [%]`) for each of the 4
-combinations (CACTUS / Non-CACTUS status x GeneSet182 / GeneSet150 gene
-sets), for both modeling approaches:
-
-- `CACTUS_ML_GeneSet182.csv`, `CACTUS_ML_GeneSet150.csv`,
-  `NonCACTUS_ML_GeneSet182.csv`, `NonCACTUS_ML_GeneSet150.csv` — ML
-  (LR/SVM/RF ensemble) SHAP-based contributions, produced by
-  `run_shap_contribution_export.py`.
-- `CACTUS_NN_GeneSet150.csv`, `CACTUS_NN_GenSet182_要因分析.csv`,
-  `Non-CACTUS_NN_GeneSet150.csv`, `Non-CACTUS_NN_GeneSet182.csv` — NN
-  factor-analysis contributions (produced by a separate NN pipeline, not
-  included in this repository).
-
-### `data/Supplement_Data_1.csv` — GO BP leading-edge gene contributions
-Per-chemical, per-pathway leading-edge gene detail underlying the GO BP
-pathway analysis: for each of the 40 chemicals x enriched GO Biological
-Process term, the contributing genes with their rlog expression delta,
-rank percentile, leading-edge membership (Y/N), and percent contribution to
-the term's enrichment score. Columns: `Chemical, No, Category, GO_term,
-GO_ID, NES, Direction, Gene, Delta_rlog, Rank_percentile, Leading_edge,
-LE_contribution_pct`.
+- `compute_cactus_features.py` — CACTUS-equivalent molecular descriptors (LogP,
+  TPSA, MW, QED, BBB heuristic, HBD/HBA, Brenk/PAINS alerts) for the 40
+  chemicals via PubChem + RDKit.
+- `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` — LR / SVM / RF training and
+  cross-validation (StratifiedShuffleSplit, compound-level) for Gene Set 1
+  (182 genes), Gene Set 2 (150 genes) and Gene Set 3 (190 genes), in the
+  transcriptomics-only (Non-CACTUS) and multi-modal (CACTUS) settings. Note: the
+  internal labels in `run_gs1_gs2_analysis.py` ("GeneSet1 (Top150)", "GeneSet2
+  (Top182)") are the reverse of the manuscript numbering used here (Gene Set 1 =
+  182-gene Wilcoxon set, Gene Set 2 = 150-gene INGOR set).
+- `build_gs190_excel.py`, `build_integrated_excel_v6.py` — formatted Excel
+  summaries of the cross-validation metrics.
+- `requirements.txt` — pinned dependency versions for this pipeline (differs
+  from the top-level `requirements.txt`).
 
 ## License
 
-See `LICENSE` (MIT) for the code. The result tables in
-`results/factor_analysis/` are aggregated summary statistics (per-feature
-contribution percentages), not raw experimental data.
+See `LICENSE` (MIT) for the code. The data files are derived, aggregated results
+(NES values and per-gene leading-edge statistics); raw RNA-seq data are deposited
+in GEO under GSE345109.
 
 ## Citing
 
-See `CITATION.cff`.
+See `CITATION.cff` and the manuscript.

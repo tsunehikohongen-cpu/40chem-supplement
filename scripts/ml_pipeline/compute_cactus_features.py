@@ -2,7 +2,7 @@
 CACTUS-equivalent molecular descriptor calculation for 40 chemicals.
 Computes: LogP, TPSA, MW, QED, BBB heuristic, HBD, HBA, Brenk/PAINS alert counts.
 """
-import requests, json, warnings
+import os, requests, json, warnings
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdMolDescriptors, QED, FilterCatalog
@@ -142,7 +142,8 @@ for name, method, val in CHEMICALS:
     records.append(row)
 
 df = pd.DataFrame(records)
-out_path = '/sessions/elegant-beautiful-bell/mnt/outputs/cactus_features_40chem.csv'
+out_path = './outputs/cactus_features_40chem.csv'
+os.makedirs('./outputs', exist_ok=True)
 df.to_csv(out_path, index=False)
 print(f"\nSaved: {out_path}")
 print(f"\nFeature table preview:")

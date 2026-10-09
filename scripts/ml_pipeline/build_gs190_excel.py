@@ -8,7 +8,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-OUTPUTS = '/sessions/elegant-beautiful-bell/mnt/outputs'
+OUTPUTS = './outputs'   # directory holding the CV_metrics_*_GeneSet190.csv files written by run_gs3_analysis.py
 
 # ── Load CV results ───────────────────────────────────────────────────────
 nc = pd.read_csv(f'{OUTPUTS}/CV_metrics_NonCACTUS_GeneSet190.csv')
