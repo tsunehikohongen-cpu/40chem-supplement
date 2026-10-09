@@ -1,0 +1,13 @@
+Gene_set,Model,Version,AUC,Accuracy,Sensitivity,F1,MCC,TP,TN,FP,FN
+Gene Set 1 (Wilcoxon),LR,before (No.32 = aspirin descriptors),0.936 ± 0.043,0.856 ± 0.055,0.847 ± 0.096,0.865 ± 0.058,0.716 ± 0.104,25,21,3,5
+Gene Set 1 (Wilcoxon),LR,after (No.32 = 5-acetylsalicylic acid),0.937 ± 0.042,0.856 ± 0.055,0.847 ± 0.096,0.865 ± 0.058,0.716 ± 0.104,25,21,3,5
+Gene Set 1 (Wilcoxon),SVM,before (No.32 = aspirin descriptors),0.928 ± 0.040,0.815 ± 0.066,0.820 ± 0.093,0.830 ± 0.059,0.635 ± 0.137,25,19,5,5
+Gene Set 1 (Wilcoxon),SVM,after (No.32 = 5-acetylsalicylic acid),0.928 ± 0.039,0.815 ± 0.066,0.820 ± 0.093,0.830 ± 0.059,0.635 ± 0.137,25,19,5,5
+Gene Set 1 (Wilcoxon),RF,before (No.32 = aspirin descriptors),0.906 ± 0.035,0.774 ± 0.061,0.840 ± 0.093,0.807 ± 0.042,0.558 ± 0.130,25,17,7,5
+Gene Set 1 (Wilcoxon),RF,after (No.32 = 5-acetylsalicylic acid),0.908 ± 0.034,0.774 ± 0.061,0.840 ± 0.093,0.807 ± 0.042,0.558 ± 0.130,25,17,7,5
+Gene Set 2 (INGOR),LR,before (No.32 = aspirin descriptors),0.893 ± 0.065,0.848 ± 0.079,0.887 ± 0.072,0.867 ± 0.069,0.693 ± 0.160,27,19,5,3
+Gene Set 2 (INGOR),LR,after (No.32 = 5-acetylsalicylic acid),0.892 ± 0.064,0.848 ± 0.079,0.887 ± 0.072,0.867 ± 0.069,0.693 ± 0.160,27,19,5,3
+Gene Set 2 (INGOR),SVM,before (No.32 = aspirin descriptors),0.901 ± 0.054,0.822 ± 0.081,0.873 ± 0.077,0.846 ± 0.067,0.644 ± 0.167,26,18,6,4
+Gene Set 2 (INGOR),SVM,after (No.32 = 5-acetylsalicylic acid),0.905 ± 0.051,0.830 ± 0.069,0.887 ± 0.069,0.854 ± 0.056,0.661 ± 0.140,27,18,6,3
+Gene Set 2 (INGOR),RF,before (No.32 = aspirin descriptors),0.872 ± 0.065,0.748 ± 0.051,0.833 ± 0.101,0.786 ± 0.031,0.503 ± 0.112,25,15,9,5
+Gene Set 2 (INGOR),RF,after (No.32 = 5-acetylsalicylic acid),0.874 ± 0.058,0.756 ± 0.036,0.840 ± 0.104,0.792 ± 0.023,0.520 ± 0.077,25,16,8,5
