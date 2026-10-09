@@ -42,7 +42,10 @@ CHEMICALS = [
     ('Dabrafenib',             'name', 'Dabrafenib'),
     ('Dasatinib',              'name', 'Dasatinib'),
     ('Imatinib',               'name', 'Imatinib'),
-    ('Acetylsalicylic acid',   'name', 'Aspirin'),        # duplicate, same as Aspirin
+    # No. 32 is 5-acetylsalicylic acid (5-acetyl-2-hydroxybenzoic acid), NOT aspirin
+    # (2-acetoxybenzoic acid, No. 16). SMILES given explicitly so that a name search
+    # cannot resolve it to aspirin.
+    ('Acetylsalicylic acid',   'smiles', 'CC(=O)C1=CC(=C(C=C1)O)C(=O)O'),
     ('D-Glucitol',             'cid',  '5780'),
     ('L-Ascorbic acid',        'name', 'L-Ascorbic acid'),
     ('Saccharin',              'name', 'Saccharin'),
@@ -59,6 +62,8 @@ URL_NAME = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/property/Iso
 URL_CID  = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/property/IsomericSMILES,CanonicalSMILES/JSON"
 
 def get_smiles(method, val):
+    if method == 'smiles':
+        return val, None
     try:
         if method == 'cid':
             r = requests.get(URL_CID.format(cid=val), timeout=10)

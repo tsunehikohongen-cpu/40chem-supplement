@@ -7,7 +7,7 @@ Two-panel comparison:
        Brenk_alerts, PAINS_alerts).
   (b) 168-descriptor extended RDKit panel (standardized, same chemicals).
 
-With these inputs (StandardScaler + sklearn PCA) panel (a) explains 52.0% / 21.9% and
+With these inputs (StandardScaler + sklearn PCA) panel (a) explains 51.7% / 22.2% and
 panel (b) 27.0% / 11.0% of the variance (PC1 / PC2).
 
 Run from the repository root.

@@ -122,7 +122,10 @@ this is an archive for transparency rather than a one-command reproduction.
 
 - `compute_cactus_features.py` — CACTUS-equivalent molecular descriptors (LogP,
   TPSA, MW, QED, BBB heuristic, HBD/HBA, Brenk/PAINS alerts) for the 40
-  chemicals via PubChem + RDKit.
+  chemicals via PubChem + RDKit. No. 32 is
+  5-acetylsalicylic acid (SMILES `CC(=O)C1=CC(=C(C=C1)O)C(=O)O`), a different
+  compound from aspirin (No. 16); its SMILES is given explicitly so that a name search
+  cannot resolve it to aspirin.
 - `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` — LR / SVM / RF training and
   cross-validation (StratifiedShuffleSplit, compound-level) for Gene Set 1
   (182 genes), Gene Set 2 (150 genes) and Gene Set 3 (190 genes), in the
