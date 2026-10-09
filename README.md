@@ -12,6 +12,7 @@ Companion repository (main-text figure scripts, expression matrix):
 | Supplementary item | File(s) in this repository |
 |---|---|
 | Supplementary Fig. 1 — NES heterogeneity over all 2,692 GO BP terms | `scripts/Supplementary_Fig_1_NES_heterogeneity.py` |
+| Supplementary Fig. 2 — PCA of RDKit molecular descriptors | `scripts/Supplementary_Fig_2_RDKit_PCA.py`, `data/Supplementary_Fig_2_10_descriptors_40chemicals.csv`, `data/Supplementary_Fig_2_RDKit_descriptors_40chemicals.csv` |
 | Supplementary Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
 | Supplementary Table 2 — predictive performance of all model configurations | `scripts/ml_pipeline/` (cross-validation and metric tables) |
 | Supplementary Table 4 / Supplementary Data 1 — ssGSEA leading-edge genes of the 30 developmental GO BP terms | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
