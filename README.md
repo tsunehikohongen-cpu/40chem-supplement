@@ -15,10 +15,10 @@ Companion repository (main-text figure scripts, expression matrix):
 | Supplementary Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
 | Supplementary Table 2 — predictive performance of all model configurations | `scripts/ml_pipeline/` (cross-validation and metric tables) |
 | Supplementary Table 4 / Supplementary Data 1 — ssGSEA leading-edge genes of the 30 developmental GO BP terms | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
+| Supplementary Table 5 — the 168 RDKit molecular descriptors | `data/Supplementary_Table_5_RDKit_descriptors.csv`, `scripts/Supplementary_Table_5_RDKit_descriptors.py` |
 | Shared input: ssGSEA NES matrix (2,692 GO BP terms x 40 chemicals) | `data/NES_matrix_GO_BP_2023_40chemicals.csv` |
 
-Supplementary Tables 3, 5, 6 and 7 and Supplementary Fig. 2 are given in the
-Supplementary Information file itself.
+Supplementary Tables 3, 6 and 7 are given in the Supplementary Information file itself.
 
 ## Repository layout
 
@@ -27,10 +27,12 @@ data/
   Supplementary_Table_1_keyword_list.csv           Supplementary Table 1
   Supplementary_Data_1_leading_edge.xlsx           Supplementary Data 1 (README, LeadingEdge_summary, per_gene sheets)
   Supplementary_Data_1_leading_edge_per_gene.csv   Supplementary Data 1, per_gene sheet as a plain CSV
+  Supplementary_Table_5_RDKit_descriptors.csv      Supplementary Table 5 (No., RDKit descriptor name)
   NES_matrix_GO_BP_2023_40chemicals.csv            ssGSEA NES matrix used by the scripts (same file as in 40chem-figures)
 scripts/
   Supplementary_Fig_1_NES_heterogeneity.py
   Supplementary_Data_1_leading_edge.py
+  Supplementary_Table_5_RDKit_descriptors.py
   fig_style.py                                     shared matplotlib style
   ml_pipeline/                                     model training / cross-validation pipeline (see below)
 ```
@@ -103,6 +105,13 @@ locates the peak and extracts the leading-edge genes.
   rank/label of such tied genes (about 2.5% of rows) and in the ES at peak
   (by <= 0.004); delta-rlog and contribution values, gene-set sizes and
   leading-edge sizes are identical.
+
+### `scripts/Supplementary_Table_5_RDKit_descriptors.py` — Supplementary Table 5
+Checks that each of the 168 descriptor names of `data/Supplementary_Table_5_RDKit_descriptors.csv`
+exists in `rdkit.Chem.Descriptors` of the installed RDKit and writes the list to
+`output/Supplementary_Table_5_RDKit_descriptors.csv` (needs `rdkit`).
+
+- Run: `python scripts/Supplementary_Table_5_RDKit_descriptors.py`
 
 ### `scripts/ml_pipeline/` — model training and evaluation pipeline
 The end-to-end pipeline behind the classifier results (Supplementary Table 2),
