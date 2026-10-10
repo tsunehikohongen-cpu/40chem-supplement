@@ -8,7 +8,7 @@ Two-panel comparison:
   (b) 168-descriptor extended RDKit panel (standardized, same chemicals).
 
 With these inputs (StandardScaler + sklearn PCA) panel (a) explains 51.7% / 22.2% and
-panel (b) 27.0% / 11.0% of the variance (PC1 / PC2).
+panel (b) 25.9% / 11.0% of the variance (PC1 / PC2).
 
 Run from the repository root.
 Inputs
@@ -57,46 +57,55 @@ TEN = ['MW','LogP','TPSA','HBD','HBA','QED',
 CAT_MARKER = {'Cat1': ('o', 55), 'Cat0': ('s', 55), 'Unknown': ('^', 70)}
 
 
+STYLE = {  # main-text Fig. 2a (iDEP-style) design
+    'Cat1':    dict(color='#A8479F', marker='o', name='Category1'),
+    'Cat0':    dict(color='#E8913A', marker='s', name='Category0'),
+    'Unknown': dict(color='#2BA9AA', marker='^', name='Unknown'),
+}
+
 def draw_pca(ax, X, cats, title, label):
+    from scipy.spatial import ConvexHull
     Xs = StandardScaler().fit_transform(X)
     pca = PCA(n_components=2)
     pc = pca.fit_transform(Xs)
     var = pca.explained_variance_ratio_ * 100
-
+    handles = []
     for g in ['Cat1', 'Cat0', 'Unknown']:
         idx = [i for i, c in enumerate(cats) if c == g]
-        if not idx:
-            continue
-        m, s = CAT_MARKER[g]
-        ax.scatter(pc[idx, 0], pc[idx, 1], marker=m, s=s,
-                   c=CATEGORY_COLORS[g], edgecolor='black', lw=0.5, zorder=3,
-                   label=f'{g} (n={len(idx)})')
+        st = STYLE[g]; col = st['color']
         xs, ys = pc[idx, 0], pc[idx, 1]
         if len(idx) >= 3:
-            cov = np.cov(xs, ys)
-            vals, vecs = np.linalg.eigh(cov)
-            order = vals.argsort()[::-1]; vals, vecs = vals[order], vecs[:, order]
-            theta = np.degrees(np.arctan2(*vecs[:, 0][::-1]))
-            w, h = 2 * np.sqrt(vals)
+            vals, vecs = np.linalg.eigh(np.cov(xs, ys))
+            o = vals.argsort()[::-1]; vals, vecs = vals[o], vecs[:, o]
+            theta = np.degrees(np.arctan2(vecs[1, 0], vecs[0, 0]))
+            w, h = 2 * np.sqrt(5.991 * vals)          # 95 % normal ellipse
             ax.add_patch(Ellipse((xs.mean(), ys.mean()), w, h, angle=theta,
-                                 facecolor=CATEGORY_COLORS[g], alpha=0.18,
-                                 edgecolor='none', zorder=1))
-            try:
-                from scipy.spatial import ConvexHull
-                hull = ConvexHull(np.c_[xs, ys])
-                poly = Polygon(np.c_[xs, ys][hull.vertices], closed=True,
-                               facecolor=CATEGORY_COLORS[g], alpha=0.08,
-                               edgecolor=CATEGORY_COLORS[g], lw=1.0, ls='--',
-                               zorder=2)
-                ax.add_patch(poly)
-            except Exception:
-                pass
-
-    ax.axhline(0, color='grey', lw=0.5); ax.axvline(0, color='grey', lw=0.5)
-    ax.set_xlabel(f'PC1 ({var[0]:.1f}%)', fontsize=12)
-    ax.set_ylabel(f'PC2 ({var[1]:.1f}%)', fontsize=12)
-    ax.set_title(f'{label}  {title}', fontsize=14, loc='left', pad=10)
-    ax.legend(loc='best', fontsize=10, frameon=False)
+                                 facecolor=col, alpha=0.22, edgecolor=col, lw=0.6, zorder=1))
+            hull = ConvexHull(np.c_[xs, ys])
+            ax.add_patch(Polygon(np.c_[xs, ys][hull.vertices], closed=True,
+                                 facecolor=col, alpha=0.10, edgecolor=col, lw=0.8,
+                                 ls=(0, (2, 2)), zorder=2))
+        ax.scatter(xs, ys, marker=st['marker'], s=28, c=col, edgecolor='none', zorder=3)
+        ax.text(xs.mean(), ys.mean(), st['name'], color=col, fontsize=9, ha='center',
+                va='center', alpha=0.9, zorder=4)
+        handles.append(plt.Line2D([], [], marker=st['marker'], ls='', color=col, ms=5,
+                                  label=f"{st['name']} (n={len(idx)})"))
+    ax.autoscale_view()
+    ax.axhline(0, color='#bbbbbb', lw=0.5, zorder=0); ax.axvline(0, color='#bbbbbb', lw=0.5, zorder=0)
+    ax.spines['top'].set_visible(True); ax.spines['right'].set_visible(True)
+    for sp in ax.spines.values():
+        sp.set_color('#c9a9c9'); sp.set_linewidth(0.8)
+    ax.tick_params(top=True, right=True, labelsize=8, colors='#444444', length=2.5)
+    ax.set_xlabel(f'PC1 ({var[0]:.1f}%)', fontsize=9, fontweight='normal', color='#333333')
+    ax.set_ylabel(f'PC2 ({var[1]:.1f}%)', fontsize=9, fontweight='normal', color='#333333')
+    ax.set_title(f'PCA: {title}', fontsize=11, fontweight='normal', loc='left', pad=30, color='#333333')
+    ax.text(0, 1.045, 'Standardized descriptors; 40 chemicals', transform=ax.transAxes,
+            fontsize=6.5, color='#444444', va='bottom')
+    ax.text(-0.14, 1.12, label, transform=ax.transAxes, fontsize=14, fontweight='bold', va='bottom')
+    ax.legend(handles=handles, loc='lower left', bbox_to_anchor=(0, 1.0), ncol=3, fontsize=7,
+              frameon=False, borderaxespad=0.1, handletextpad=0.2, columnspacing=1.0,
+              bbox_transform=ax.transAxes) if False else ax.legend(handles=handles,
+              loc='upper center', bbox_to_anchor=(0.5, -0.12), ncol=3, fontsize=8, frameon=False)
 
 
 # ----- Panel (a): 10 original descriptors --------------------------------------
