@@ -1,0 +1,106 @@
+row,sample
+1,Acitretin_0.1
+2,Acitretin_0.3
+3,Acitretin_1
+4,Busulfan_0.1
+5,Busulfan_0.3
+6,Busulfan_1
+7,Carbamazepine_0.1
+8,Carbamazepine_0.3
+9,Carbamazepine_1
+10,Cyclophosphamide_0.1
+11,Cyclophosphamide_0.3
+12,Cyclophosphamide_1
+13,Fluconazole_0.1
+14,Fluconazole_0.3
+15,Fluconazole_1
+16,5-Fluorouracil_0.1
+17,5-Fluorouracil_0.3
+18,5-Fluorouracil_1
+19,Hydroxyurea_0.1
+20,Hydroxyurea_0.3
+21,Hydroxyurea_1
+22,Isotretinoin_0.1
+23,Isotretinoin_0.3
+24,Isotretinoin_1
+25,Methotrexate_0.1
+26,Methotrexate_0.3
+27,Methotrexate_1
+28,Phenytoin_0.1
+29,Phenytoin_0.3
+30,Phenytoin_1
+31,Thalidomide_0.1
+32,Thalidomide_0.3
+33,Thalidomide_1
+34,Topiramate_0.1
+35,Topiramate_0.3
+36,Topiramate_1
+37,Tretinoin_0.1
+38,Tretinoin_0.3
+39,Tretinoin_1
+40,Valproic acid_0.1
+41,Valproic acid_0.3
+42,Valproic acid_1
+43,Pomalidomide_0.1
+44,Pomalidomide_0.3
+45,Pomalidomide_1
+46,Aspirin_0.1
+47,Aspirin_0.3
+48,Aspirin_1
+49,Cytarabine_0.03
+50,Cytarabine_0.1
+51,Cytarabine_0.3
+52,Ibuprofen_0.1
+53,Ibuprofen_0.3
+54,Ibuprofen_1
+55,Trimethadione_0.1
+56,Trimethadione_0.3
+57,Trimethadione_1
+58,Vismodegib_0.1
+59,Vismodegib_0.3
+60,Vismodegib_1
+61,Ibrutinib_0.1
+62,Ibrutinib_0.3
+63,Ibrutinib_1
+64,Pazopanib_0.1
+65,Pazopanib_0.3
+66,Pazopanib_1
+67,Ribavirin_0.1
+68,Ribavirin_0.3
+69,Ribavirin_1
+70,Tacrolimus_0.1
+71,Tacrolimus_0.3
+72,Tacrolimus_1
+73,Bosentan_0.1
+74,Bosentan_0.3
+75,Bosentan_1
+76,Cisplatin_0.1
+77,Cisplatin_0.3
+78,Cisplatin_1
+79,Dabrafenib_0.1
+80,Dabrafenib_0.3
+81,Dabrafenib_1
+82,Dasatinib_0.01
+83,Dasatinib_0.03
+84,Dasatinib_0.1
+85,Imatinib_0.1
+86,Imatinib_0.3
+87,Imatinib_1
+88,Rotenone_0.3
+89,Rotenone_1
+90,Rotenone_2.5
+91,Acetaminophen_0.1
+92,Acetaminophen_0.3
+93,Acetaminophen_1
+94,Acetylsalicylic acid_0.1
+95,Acetylsalicylic acid_0.3
+96,Acetylsalicylic acid_1
+97,D-Glucitol_0.1
+98,D-Glucitol_0.3
+99,D-Glucitol_1
+100,L-Ascorbic acid_0.1
+101,L-Ascorbic acid_0.3
+102,L-Ascorbic acid_1
+103,Saccharin Sodium Salt hydrate_0.1
+104,Saccharin Sodium Salt hydrate_0.3
+105,Saccharin Sodium Salt hydrate_1

@@ -1,0 +1,55 @@
+row,sample
+1,Acitretin_0.1
+2,Acitretin_0.3
+3,Acitretin_1
+4,Busulfan_0.1
+5,Busulfan_0.3
+6,Busulfan_1
+7,Carbamazepine_0.1
+8,Carbamazepine_0.3
+9,Carbamazepine_1
+10,Fluconazole_0.1
+11,Fluconazole_0.3
+12,Fluconazole_1
+13,5-Fluorouracil_0.1
+14,5-Fluorouracil_0.3
+15,5-Fluorouracil_1
+16,Isotretinoin_0.1
+17,Isotretinoin_0.3
+18,Isotretinoin_1
+19,Topiramate_0.1
+20,Topiramate_0.3
+21,Topiramate_1
+22,Valproic acid_0.1
+23,Valproic acid_0.3
+24,Valproic acid_1
+25,Cytarabine_0.03
+26,Cytarabine_0.1
+27,Cytarabine_0.3
+28,Ibuprofen_0.1
+29,Ibuprofen_0.3
+30,Ibuprofen_1
+31,Pazopanib_0.1
+32,Pazopanib_0.3
+33,Pazopanib_1
+34,Tacrolimus_0.1
+35,Tacrolimus_0.3
+36,Tacrolimus_1
+37,Bosentan_0.1
+38,Bosentan_0.3
+39,Bosentan_1
+40,Dabrafenib_0.1
+41,Dabrafenib_0.3
+42,Dabrafenib_1
+43,Dasatinib_0.01
+44,Dasatinib_0.03
+45,Dasatinib_0.1
+46,Acetaminophen_0.1
+47,Acetaminophen_0.3
+48,Acetaminophen_1
+49,D-Glucitol_0.1
+50,D-Glucitol_0.3
+51,D-Glucitol_1
+52,Saccharin Sodium Salt hydrate_0.1
+53,Saccharin Sodium Salt hydrate_0.3
+54,Saccharin Sodium Salt hydrate_1

@@ -1,0 +1,55 @@
+row,sample
+1,Carbamazepine_0.1
+2,Carbamazepine_0.3
+3,Carbamazepine_1
+4,Cyclophosphamide_0.1
+5,Cyclophosphamide_0.3
+6,Cyclophosphamide_1
+7,Fluconazole_0.1
+8,Fluconazole_0.3
+9,Fluconazole_1
+10,5-Fluorouracil_0.1
+11,5-Fluorouracil_0.3
+12,5-Fluorouracil_1
+13,Isotretinoin_0.1
+14,Isotretinoin_0.3
+15,Isotretinoin_1
+16,Methotrexate_0.1
+17,Methotrexate_0.3
+18,Methotrexate_1
+19,Pomalidomide_0.1
+20,Pomalidomide_0.3
+21,Pomalidomide_1
+22,Aspirin_0.1
+23,Aspirin_0.3
+24,Aspirin_1
+25,Ibuprofen_0.1
+26,Ibuprofen_0.3
+27,Ibuprofen_1
+28,Vismodegib_0.1
+29,Vismodegib_0.3
+30,Vismodegib_1
+31,Ribavirin_0.1
+32,Ribavirin_0.3
+33,Ribavirin_1
+34,Tacrolimus_0.1
+35,Tacrolimus_0.3
+36,Tacrolimus_1
+37,Dabrafenib_0.1
+38,Dabrafenib_0.3
+39,Dabrafenib_1
+40,Imatinib_0.1
+41,Imatinib_0.3
+42,Imatinib_1
+43,Rotenone_0.3
+44,Rotenone_1
+45,Rotenone_2.5
+46,Acetaminophen_0.1
+47,Acetaminophen_0.3
+48,Acetaminophen_1
+49,L-Ascorbic acid_0.1
+50,L-Ascorbic acid_0.3
+51,L-Ascorbic acid_1
+52,Saccharin Sodium Salt hydrate_0.1
+53,Saccharin Sodium Salt hydrate_0.3
+54,Saccharin Sodium Salt hydrate_1

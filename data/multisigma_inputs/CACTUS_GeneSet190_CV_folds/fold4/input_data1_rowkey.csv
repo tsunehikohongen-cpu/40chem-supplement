@@ -1,0 +1,52 @@
+row,sample
+1,Cyclophosphamide_0.1
+2,Cyclophosphamide_0.3
+3,Cyclophosphamide_1
+4,5-Fluorouracil_0.1
+5,5-Fluorouracil_0.3
+6,5-Fluorouracil_1
+7,Hydroxyurea_0.1
+8,Hydroxyurea_0.3
+9,Hydroxyurea_1
+10,Isotretinoin_0.1
+11,Isotretinoin_0.3
+12,Isotretinoin_1
+13,Methotrexate_0.1
+14,Methotrexate_0.3
+15,Methotrexate_1
+16,Phenytoin_0.1
+17,Phenytoin_0.3
+18,Phenytoin_1
+19,Thalidomide_0.1
+20,Thalidomide_0.3
+21,Thalidomide_1
+22,Topiramate_0.1
+23,Topiramate_0.3
+24,Topiramate_1
+25,Tretinoin_0.1
+26,Tretinoin_0.3
+27,Tretinoin_1
+28,Valproic acid_0.1
+29,Valproic acid_0.3
+30,Valproic acid_1
+31,Bosentan_0.1
+32,Bosentan_0.3
+33,Bosentan_1
+34,Cisplatin_0.1
+35,Cisplatin_0.3
+36,Cisplatin_1
+37,Dasatinib_0.01
+38,Dasatinib_0.03
+39,Dasatinib_0.1
+40,Imatinib_0.1
+41,Imatinib_0.3
+42,Imatinib_1
+43,Acetaminophen_0.1
+44,Acetaminophen_0.3
+45,Acetaminophen_1
+46,Acetylsalicylic acid_0.1
+47,Acetylsalicylic acid_0.3
+48,Acetylsalicylic acid_1
+49,D-Glucitol_0.1
+50,D-Glucitol_0.3
+51,D-Glucitol_1

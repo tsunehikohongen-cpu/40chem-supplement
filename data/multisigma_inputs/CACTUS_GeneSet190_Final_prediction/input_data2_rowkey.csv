@@ -1,0 +1,16 @@
+row,sample
+1,Deltamethrin_0.1
+2,Deltamethrin_0.3
+3,Deltamethrin_1
+4,"2,2',4,4',5-Pentabromodiphenyl ether_0.1"
+5,"2,2',4,4',5-Pentabromodiphenyl ether_0.3"
+6,"2,2',4,4',5-Pentabromodiphenyl ether_1"
+7,Bisphenol A_0.1
+8,Bisphenol A_0.3
+9,Bisphenol A_1
+10,Chlorpyrifos_0.1
+11,Chlorpyrifos_0.3
+12,Chlorpyrifos_1
+13,imidacloprid_0.1
+14,imidacloprid_0.3
+15,imidacloprid_1

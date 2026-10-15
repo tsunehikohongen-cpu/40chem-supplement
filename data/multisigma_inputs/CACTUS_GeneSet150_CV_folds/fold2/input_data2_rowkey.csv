@@ -1,0 +1,55 @@
+row,sample
+1,Cyclophosphamide_0.1
+2,Cyclophosphamide_0.3
+3,Cyclophosphamide_1
+4,Hydroxyurea_0.1
+5,Hydroxyurea_0.3
+6,Hydroxyurea_1
+7,Isotretinoin_0.1
+8,Isotretinoin_0.3
+9,Isotretinoin_1
+10,Methotrexate_0.1
+11,Methotrexate_0.3
+12,Methotrexate_1
+13,Topiramate_0.1
+14,Topiramate_0.3
+15,Topiramate_1
+16,Valproic acid_0.1
+17,Valproic acid_0.3
+18,Valproic acid_1
+19,Pomalidomide_0.1
+20,Pomalidomide_0.3
+21,Pomalidomide_1
+22,Aspirin_0.1
+23,Aspirin_0.3
+24,Aspirin_1
+25,Ibuprofen_0.1
+26,Ibuprofen_0.3
+27,Ibuprofen_1
+28,Trimethadione_0.1
+29,Trimethadione_0.3
+30,Trimethadione_1
+31,Pazopanib_0.1
+32,Pazopanib_0.3
+33,Pazopanib_1
+34,Tacrolimus_0.1
+35,Tacrolimus_0.3
+36,Tacrolimus_1
+37,Bosentan_0.1
+38,Bosentan_0.3
+39,Bosentan_1
+40,Cisplatin_0.1
+41,Cisplatin_0.3
+42,Cisplatin_1
+43,Rotenone_Rotenone 0.3
+44,Rotenone_Rotenone 1
+45,Rotenone_Rotenone 25
+46,Acetylsalicylic acid_Acetylsalicylic acid 0.1
+47,Acetylsalicylic acid_Acetylsalicylic acid 0.3
+48,Acetylsalicylic acid_Acetylsalicylic acid 1
+49,D-Glucitol_D-Glucitol 0.1
+50,D-Glucitol_D-Glucitol 0.3
+51,D-Glucitol_D-Glucitol 1
+52,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 0.1
+53,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 0.3
+54,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 1

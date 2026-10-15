@@ -1,0 +1,52 @@
+row,sample
+1,Acitretin_0.1
+2,Acitretin_0.3
+3,Acitretin_1
+4,Busulfan_0.1
+5,Busulfan_0.3
+6,Busulfan_1
+7,Carbamazepine_0.1
+8,Carbamazepine_0.3
+9,Carbamazepine_1
+10,5-Fluorouracil_0.1
+11,5-Fluorouracil_0.3
+12,5-Fluorouracil_1
+13,Isotretinoin_0.1
+14,Isotretinoin_0.3
+15,Isotretinoin_1
+16,Methotrexate_0.1
+17,Methotrexate_0.3
+18,Methotrexate_1
+19,Thalidomide_0.1
+20,Thalidomide_0.3
+21,Thalidomide_1
+22,Valproic acid_0.1
+23,Valproic acid_0.3
+24,Valproic acid_1
+25,Pomalidomide_0.1
+26,Pomalidomide_0.3
+27,Pomalidomide_1
+28,Vismodegib_0.1
+29,Vismodegib_0.3
+30,Vismodegib_1
+31,Tacrolimus_0.1
+32,Tacrolimus_0.3
+33,Tacrolimus_1
+34,Cisplatin_0.1
+35,Cisplatin_0.3
+36,Cisplatin_1
+37,Dabrafenib_Dabrafenib 0.1
+38,Dabrafenib_Dabrafenib 0.3
+39,Dabrafenib_Dabrafenib 1
+40,Dasatinib_Dasatinib 0.01
+41,Dasatinib_Dasatinib 0.03
+42,Dasatinib_Dasatinib 0.1
+43,Imatinib_Imatinib 0.1
+44,Imatinib_Imatinib 0.3
+45,Imatinib_Imatinib 1
+46,Rotenone_Rotenone 0.3
+47,Rotenone_Rotenone 1
+48,Rotenone_Rotenone 25
+49,Acetaminophen_Acetaminophen 0.1
+50,Acetaminophen_Acetaminophen 0.3
+51,Acetaminophen_Acetaminophen 1

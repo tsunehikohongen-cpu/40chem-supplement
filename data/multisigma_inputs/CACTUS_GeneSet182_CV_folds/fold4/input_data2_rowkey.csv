@@ -1,0 +1,55 @@
+row,sample
+1,Acitretin_0.1
+2,Acitretin_0.3
+3,Acitretin_1
+4,Busulfan_0.1
+5,Busulfan_0.3
+6,Busulfan_1
+7,Carbamazepine_0.1
+8,Carbamazepine_0.3
+9,Carbamazepine_1
+10,Fluconazole_0.1
+11,Fluconazole_0.3
+12,Fluconazole_1
+13,Pomalidomide_0.1
+14,Pomalidomide_0.3
+15,Pomalidomide_1
+16,Aspirin_0.1
+17,Aspirin_0.3
+18,Aspirin_1
+19,Cytarabine_0.03
+20,Cytarabine_0.1
+21,Cytarabine_0.3
+22,Ibuprofen_0.1
+23,Ibuprofen_0.3
+24,Ibuprofen_1
+25,Trimethadione_0.1
+26,Trimethadione_0.3
+27,Trimethadione_1
+28,Vismodegib_0.1
+29,Vismodegib_0.3
+30,Vismodegib_1
+31,Ibrutinib_0.1
+32,Ibrutinib_0.3
+33,Ibrutinib_1
+34,Pazopanib_0.1
+35,Pazopanib_0.3
+36,Pazopanib_1
+37,Ribavirin_0.1
+38,Ribavirin_0.3
+39,Ribavirin_1
+40,Tacrolimus_0.1
+41,Tacrolimus_0.3
+42,Tacrolimus_1
+43,Dabrafenib_Dabrafenib 0.1
+44,Dabrafenib_Dabrafenib 0.3
+45,Dabrafenib_Dabrafenib 1
+46,Rotenone_Rotenone 0.3
+47,Rotenone_Rotenone 1
+48,Rotenone_Rotenone 25
+49,L-Ascorbic acid_L-Ascorbic acid 0.1
+50,L-Ascorbic acid_L-Ascorbic acid 0.3
+51,L-Ascorbic acid_L-Ascorbic acid 1
+52,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 0.1
+53,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 0.3
+54,Saccharin Sodium Salt hydrate_Saccharin Sodium Salt hydrate 1

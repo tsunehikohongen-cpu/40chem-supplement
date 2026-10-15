@@ -1,0 +1,52 @@
+row,sample
+1,Acitretin_0.1
+2,Acitretin_0.3
+3,Acitretin_1
+4,Busulfan_0.1
+5,Busulfan_0.3
+6,Busulfan_1
+7,Carbamazepine_0.1
+8,Carbamazepine_0.3
+9,Carbamazepine_1
+10,Fluconazole_0.1
+11,Fluconazole_0.3
+12,Fluconazole_1
+13,5-Fluorouracil_0.1
+14,5-Fluorouracil_0.3
+15,5-Fluorouracil_1
+16,Phenytoin_0.1
+17,Phenytoin_0.3
+18,Phenytoin_1
+19,Thalidomide_0.1
+20,Thalidomide_0.3
+21,Thalidomide_1
+22,Tretinoin_0.1
+23,Tretinoin_0.3
+24,Tretinoin_1
+25,Cytarabine_0.03
+26,Cytarabine_0.1
+27,Cytarabine_0.3
+28,Vismodegib_0.1
+29,Vismodegib_0.3
+30,Vismodegib_1
+31,Ibrutinib_0.1
+32,Ibrutinib_0.3
+33,Ibrutinib_1
+34,Ribavirin_0.1
+35,Ribavirin_0.3
+36,Ribavirin_1
+37,Dabrafenib_Dabrafenib 0.1
+38,Dabrafenib_Dabrafenib 0.3
+39,Dabrafenib_Dabrafenib 1
+40,Dasatinib_Dasatinib 0.01
+41,Dasatinib_Dasatinib 0.03
+42,Dasatinib_Dasatinib 0.1
+43,Imatinib_Imatinib 0.1
+44,Imatinib_Imatinib 0.3
+45,Imatinib_Imatinib 1
+46,Acetaminophen_Acetaminophen 0.1
+47,Acetaminophen_Acetaminophen 0.3
+48,Acetaminophen_Acetaminophen 1
+49,L-Ascorbic acid_L-Ascorbic acid 0.1
+50,L-Ascorbic acid_L-Ascorbic acid 0.3
+51,L-Ascorbic acid_L-Ascorbic acid 1
