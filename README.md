@@ -147,3 +147,11 @@ in GEO under GSE345109.
 ## Citing
 
 See `CITATION.cff` and the manuscript.
+
+
+## Reproducing Supplementary Table 10 (Gene Set 1 re-selected within training splits)
+Run `python nested_gene_selection.py` from `scripts/ml_pipeline`. Inputs are included in this repository:
+`data/nested_selection_inputs/` (log fold changes of the 1,000 candidate genes, and the INGOR/Wilcoxon rank-sum node tables for Label A and Label B)
+and `data/multisigma_inputs/CACTUS_GeneSet182_CV_folds/` (fold inputs; sample names in the `*_rowkey.csv` files).
+The output reproduces `results/leakage_sensitivity/nested_folds.csv` exactly. Gene Set 1 is selected with a two-sided Wilcoxon rank-sum (Mann–Whitney U) test,
+Benjamini–Hochberg FDR <= 0.01, over the 632 of the 1,000 candidate genes with a defined test result; all 1,000 genes have INGOR edge scores >= 0.5, so the edge-score criterion does not change the selection.

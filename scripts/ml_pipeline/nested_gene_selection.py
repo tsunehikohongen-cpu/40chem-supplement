@@ -1,4 +1,4 @@
-# Sensitivity analysis: Gene Set 1 re-selected within each training split (Supplementary Table 10). Needs ./inputs/{40 Chem logFC-ac99b402.csv,1000_ECv_wilcoxon_nodes_LabelA_complete.tsv} and ./outputs/CACTUS_GeneSet182/CV_folds.
+# Sensitivity analysis: Gene Set 1 re-selected within each training split (Supplementary Table 10). Run from scripts/ml_pipeline. Inputs: ../../data/nested_selection_inputs (logFC of the 1,000 candidate genes; INGOR/Wilcoxon node table) and ../../data/multisigma_inputs/CACTUS_GeneSet182_CV_folds.
 import re,numpy as np,pandas as pd,warnings
 warnings.filterwarnings('ignore')
 from scipy.stats import mannwhitneyu
@@ -12,15 +12,15 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score,matthews_corrcoef,confusion_matrix,accuracy_score
 src=open('./run_gs1_gs2_analysis.py').read()
 NO2PFX=eval(re.search(r'NO2PFX = (\{.*?\n\})',src,re.S).group(1))
-lf=pd.read_csv('./inputs/40 Chem logFC-ac99b402.csv',index_col=0)
-w=pd.read_csv('./inputs/1000_ECv_wilcoxon_nodes_LabelA_complete.tsv',sep='\t')
+lf=pd.read_csv('../../data/nested_selection_inputs/40_Chem_logFC_top1000.csv',index_col=0)
+w=pd.read_csv('../../data/nested_selection_inputs/1000_ECv_wilcoxon_nodes_LabelA_complete.tsv',sep='\t')
 genes1000=[g for g,pv in zip(w.name,w.p_value) if g in lf.index and not np.isnan(pv)]
 sname={}
 for no in range(1,36):
     p=NO2PFX[no]
     cols=sorted([c for c in lf.columns if c.startswith(p+'_') or c.startswith(p+' ')])
     for c in cols: sname[f"{p}_{c.split('_')[-1]}"]=(c,no)
-R='./outputs/CACTUS_GeneSet182/CV_folds/'
+R='../../data/multisigma_inputs/CACTUS_GeneSet182_CV_folds/'
 DC=['MW','LogP','TPSA','HBD','HBA','QED','BBB_penetrant','BBB_score','Brenk_alerts','PAINS_alerts']
 def models():
     return {'LR':LogisticRegression(C=0.1,max_iter=2000,class_weight='balanced',random_state=42),
@@ -37,8 +37,8 @@ allnames=list(sname); yall=np.array([1 if sname[n][1]<=20 else 0 for n in allnam
 full=select(allnames,yall);print('full-data FDR<=0.01 genes:',len(full))
 rows=[]
 for f in range(1,6):
-    X1=pd.read_csv(f'{R}fold{f}/input_data1.csv',index_col=0);y1=pd.read_csv(f'{R}fold{f}/output_data1.csv').iloc[:,0].values
-    X2=pd.read_csv(f'{R}fold{f}/input_data2.csv',index_col=0);y2=pd.read_csv(f'{R}fold{f}/output_data2.csv').iloc[:,0].values
+    X1=pd.read_csv(f'{R}fold{f}/input_data1.csv');X1.index=pd.read_csv(f'{R}fold{f}/input_data1_rowkey.csv')['sample'].values;y1=pd.read_csv(f'{R}fold{f}/output_data1.csv').iloc[:,0].values
+    X2=pd.read_csv(f'{R}fold{f}/input_data2.csv');X2.index=pd.read_csv(f'{R}fold{f}/input_data2_rowkey.csv')['sample'].values;y2=pd.read_csv(f'{R}fold{f}/output_data2.csv').iloc[:,0].values
     sel=select(list(X1.index),y1);print('fold',f,'selected',len(sel),'overlap with GS1',len(set(sel)&set(full)))
     def feat(X,names,mod):
         G=lf.loc[sel,[sname[n][0] for n in names]].T.values.astype(float)
