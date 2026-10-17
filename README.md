@@ -1,41 +1,49 @@
 # 40chem-supplement
 
-Supplementary data and analysis code for the 40-chemical iPSC transcriptomics
-manuscript (mechanism-of-action structure of human iPSC responses and
-developmental-toxicity prediction).
+Supplementary data and analysis code for the 40-chemical iPSC transcriptomics manuscript (mechanism-of-action
+structure of human iPSC responses and developmental-toxicity prediction).
 
-Companion repository (main-text figure scripts, expression matrix):
+Companion repository (main-text figure scripts, expression matrix, Fig. 4 predictions, per-feature contributions):
 [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)
 
 ## Which file belongs to which Supplementary item?
 
 | Supplementary item | File(s) in this repository |
 |---|---|
-| Supplementary Fig. 1 — NES heterogeneity over all 2,692 GO BP terms | `scripts/Supplementary_Fig_1_NES_heterogeneity.py` |
-| Supplementary Fig. 2 — PCA of RDKit molecular descriptors | `scripts/Supplementary_Fig_2_RDKit_PCA.py`, `data/Supplementary_Fig_2_10_descriptors_40chemicals.csv`, `data/Supplementary_Fig_2_RDKit_descriptors_40chemicals.csv` |
-| Supplementary Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
-| Supplementary Table 2 — predictive performance of all model configurations | `scripts/ml_pipeline/` (cross-validation and metric tables) |
-| Supplementary Table 4 / Supplementary Data 1 — ssGSEA leading-edge genes of the 30 developmental GO BP terms | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
-| Supplementary Table 5 — the 168 RDKit molecular descriptors | `data/Supplementary_Table_5_RDKit_descriptors.csv`, `scripts/Supplementary_Table_5_RDKit_descriptors.py` |
-| Shared input: ssGSEA NES matrix (2,692 GO BP terms x 40 chemicals) | `data/NES_matrix_GO_BP_2023_40chemicals.csv` |
+| Fig. 1 — NES heterogeneity (2,692 GO BP terms) | `scripts/Supplementary_Fig_1_NES_heterogeneity.py` |
+| Fig. 2 — PCA of RDKit descriptors | `scripts/Supplementary_Fig_2_RDKit_PCA.py`, `data/Supplementary_Fig_2_10_descriptors_40chemicals.csv`, `data/Supplementary_Fig_2_RDKit_descriptors_40chemicals.csv` |
+| Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
+| Table 2 — performance of all model configurations | `data/supplementary_tables/Supplementary_Table_2_model_performance.csv`; ML rows recomputable from `data/multisigma_inputs/*_CV_folds/` (see below); NN: `results/multisigma_nn_evaluation/`; before/after the No. 32 descriptor correction: `data/Supplementary_Table_2_ML_multimodal_corrected.csv` |
+| Table 3 — exposure conditions | `data/supplementary_tables/Supplementary_Table_3_exposure_conditions.csv` |
+| Table 4 — leading-edge term overview | `data/supplementary_tables/Supplementary_Table_4_leading_edge_term_overview.csv` |
+| Data 1 — gene-level leading-edge attribution | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
+| Table 5 — the 168 RDKit descriptors | `data/Supplementary_Table_5_RDKit_descriptors.csv`, `scripts/Supplementary_Table_5_RDKit_descriptors.py` |
+| Table 6 — MoA vs ChEMBL / AOP-Wiki | `data/supplementary_tables/Supplementary_Table_6_MoA_ChEMBL_AOP.csv` |
+| Table 7 — permutation tests (Fig. 5) | `data/supplementary_tables/Supplementary_Table_7_permutation_tests.csv`; code: `scripts/Fig5_MoA_permutation_test.py` in 40chem-figures |
+| Table 8 — CAS RN, PubChem CID, SMILES, InChIKey, descriptors | `data/Master_chemical_descriptors_40chemicals.csv` |
+| Table 9 — chemical-level performance | `data/supplementary_tables/Supplementary_Table_9_chemical_level_performance.csv`, `results/leakage_sensitivity/chem_level_folds.csv`, `scripts/ml_pipeline/chem_level_metrics.py` |
+| Table 10 — Gene Set 1 re-selected within each split | `data/supplementary_tables/Supplementary_Table_10_nested_gene_selection.csv`, `results/leakage_sensitivity/nested_folds.csv`, `scripts/ml_pipeline/nested_gene_selection.py`, `data/nested_selection_inputs/` |
+| Shared input: ssGSEA NES matrix | `data/NES_matrix_GO_BP_2023_40chemicals.csv` (identical to the file in 40chem-figures) |
 
-Supplementary Tables 3, 6 and 7 are given in the Supplementary Information file itself.
+The `data/supplementary_tables/*.csv` files are the tables of the Supplementary Information in machine-readable form
+(numbers as printed there).
 
 ## Repository layout
 
 ```
 data/
-  Supplementary_Table_1_keyword_list.csv           Supplementary Table 1
-  Supplementary_Data_1_leading_edge.xlsx           Supplementary Data 1 (README, LeadingEdge_summary, per_gene sheets)
-  Supplementary_Data_1_leading_edge_per_gene.csv   Supplementary Data 1, per_gene sheet as a plain CSV
-  Supplementary_Table_5_RDKit_descriptors.csv      Supplementary Table 5 (No., RDKit descriptor name)
-  NES_matrix_GO_BP_2023_40chemicals.csv            ssGSEA NES matrix used by the scripts (same file as in 40chem-figures)
+  supplementary_tables/        SI tables 2, 3, 4, 6, 7, 9, 10 as CSV
+  multisigma_inputs/           model inputs: 5 chemical-level splits and the final training set for Gene Sets 1/2/3
+                               (CACTUS_GeneSet{182,150,190}_*; numeric-only; *_rowkey.csv maps rows to samples),
+                               final_training_results/ (settings of the 10 final networks per gene set)
+  nested_selection_inputs/     inputs of the within-split Gene Set 1 re-selection (log fold changes, INGOR tables)
+  Master_chemical_descriptors_40chemicals.csv, Supplementary_*.csv/xlsx, NES_matrix_*.csv
+results/
+  leakage_sensitivity/         per-split results of Supplementary Tables 9 and 10
+  multisigma_nn_evaluation/    Multi-Sigma report pages of the evaluation splits (multi-modal NN)
 scripts/
-  Supplementary_Fig_1_NES_heterogeneity.py
-  Supplementary_Data_1_leading_edge.py
-  Supplementary_Table_5_RDKit_descriptors.py
-  fig_style.py                                     shared matplotlib style
-  ml_pipeline/                                     model training / cross-validation pipeline (see below)
+  Supplementary_*.py, fig_style.py
+  ml_pipeline/                 model training and evaluation scripts
 ```
 
 ## Setup
@@ -46,112 +54,45 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Tested with Python 3.12. Run all scripts from the repository root; outputs are
-written to `output/` (git-ignored).
+Tested with Python 3.12. Run scripts from the repository root unless stated otherwise; outputs go to `output/` (git-ignored).
+`go-basic.obo` (Gene Ontology, needed by Supplementary Fig. 1) is not included:
+`curl -L -o go-basic.obo https://current.geneontology.org/ontology/go-basic.obo`.
+`40_Chem_DESeq_normalized.csv` (needed by Supplementary Data 1) is in 40chem-figures/data; copy it to `data/`.
 
-## Data files
+## Reproducing the supplementary results
 
-- **`NES_matrix_GO_BP_2023_40chemicals.csv`** — single-sample GSEA (ssGSEA)
-  normalized enrichment scores of the 40 chemicals (columns, fixed order:
-  Category 1 (20) | Category 0 (15) | Unknown (5)) for the 2,692 terms of the
-  Enrichr library `GO_Biological_Process_2023` (rows). It is the same file as
-  `data/NES_matrix_GO_BP_2023_40chemicals.csv` in
-  [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures), where
-  `scripts/compute_ssGSEA_NES_matrix.py` regenerates it from the expression
-  matrix. SHA-256: `e49c67fac312cc33453840b2a16d742e591f1b739419fa561ec224c5e13a98aa`.
-- **`Supplementary_Table_1_keyword_list.csv`** — columns `[role, keyword_or_root]`;
-  `role` is `include` (41 keywords), `exclude` (6) or `ontology_root` (GO:0032502).
-- **`Supplementary_Data_1_leading_edge*.{xlsx,csv}`** — for every chemical x
-  developmental GO BP term of the 30-term heatmap (Supplementary Fig. 1a; formerly
-  Fig. 2b of the main text), the leading-edge genes with their rank in the
-  delta-rlog-ordered gene list, delta-rlog and percent contribution to the
-  enrichment score. `per_gene` columns: `chemical, term, gene, rank,
-  delta_rlog, contribution`. The workbook's `README` sheet documents the
-  definitions; `LeadingEdge_summary` has one row per chemical x term.
+| Item | Command | Result |
+|---|---|---|
+| Supp. Fig. 1 | `python scripts/Supplementary_Fig_1_NES_heterogeneity.py` | `output/Supplementary_Fig_1_NES_heterogeneity.{png,pdf}` |
+| Supp. Fig. 2 | `python scripts/Supplementary_Fig_2_RDKit_PCA.py` | PC1/PC2: (a) 52.0 / 21.9 %, (b) 27.0 / 11.0 % |
+| Supp. Data 1 | `python scripts/Supplementary_Data_1_leading_edge.py` | same values; genes with identical delta-rlog have no defined order, so rank/label of such tied genes (about 2.5 % of rows) can differ on re-run |
+| Supp. Table 5 | `python scripts/Supplementary_Table_5_RDKit_descriptors.py` | checks the 168 names against RDKit |
+| Supp. Table 10 | `cd scripts/ml_pipeline && python nested_gene_selection.py` | LR and SVM identical to `results/leakage_sensitivity/nested_folds.csv`; RF can differ slightly (random forest, platform-dependent) |
+| Supp. Tables 2 and 9 (ML models) | fit LR / SVM / RF (settings in `scripts/ml_pipeline/chem_level_metrics.py`) on `input_data1.csv`, predict `input_data2.csv` of each `data/multisigma_inputs/CACTUS_GeneSet{182,150,190}_CV_folds/fold{1-5}/`; for the transcriptomics-only model drop the 10 descriptor columns (MW, LogP, TPSA, HBD, HBA, QED, BBB_penetrant, BBB_score, Brenk_alerts, PAINS_alerts) | reproduces the ML values of Table 2 (102 of 108 values to 3 decimals; the others are random-forest differences) and of Table 9 |
 
-## Scripts
+Final-model ML probabilities (Fig. 4) are reproduced the same way from
+`data/multisigma_inputs/CACTUS_GeneSet{182,150}_Final_prediction/` (training set `input_data1.csv`, the five Unknown chemicals
+`input_data2.csv`; LR and SVM identical to the values in 40chem-figures, RF within 0.005).
 
-### `scripts/Supplementary_Fig_1_NES_heterogeneity.py` — Supplementary Fig. 1
-Three panels: (a) heatmap of the 30 developmental GO BP terms with the largest
-cross-chemical NES variance among the 298 keyword-matched terms (Ward /
-Euclidean row clustering); (b) 40 x 40 compound correlation heatmap
-(Category 1 | Category 0 | Unknown); (c) histogram of per-term cross-chemical
-NES variance with keyword-selected and ontology-selected subset medians.
+## Neural-network analyses (Multi-Sigma)
 
-- Inputs: `data/NES_matrix_GO_BP_2023_40chemicals.csv`,
-  `data/Supplementary_Table_1_keyword_list.csv`, and `go-basic.obo`
-  (Gene Ontology, not included; download once):
-  ```bash
-  curl -L -o go-basic.obo https://current.geneontology.org/ontology/go-basic.obo
-  ```
-- Run: `python scripts/Supplementary_Fig_1_NES_heterogeneity.py`
-- Output: `output/Supplementary_Fig_1_NES_heterogeneity.{png,pdf}` (600 dpi)
+The neural networks were built with Multi-Sigma (Lightstone Corp.), a commercial graphical platform. Provided here are the input
+files of every evaluation split and of the final models (`data/multisigma_inputs/`), the settings of the final networks
+(`final_training_results/`), the evaluation report pages (`results/multisigma_nn_evaluation/`), and, in 40chem-figures, the
+final-model outputs for the Unknown chemicals and the per-feature contributions. The per-sample scores of the evaluation splits
+are not exported as tables by Multi-Sigma (only the report pages); the networks cannot be re-trained without the platform.
 
-### `scripts/Supplementary_Data_1_leading_edge.py` — Supplementary Data 1
-Re-walks the delta-rlog-ranked gene list of every chemical for each of the 30
-developmental terms (ssGSEA running sum, hit weight = |delta-rlog|^0.25),
-locates the peak and extracts the leading-edge genes.
+## `scripts/ml_pipeline/` — model training pipeline
 
-- Inputs: `40_Chem_DESeq_normalized.csv` (expression matrix; shipped in
-  [40chem-figures](https://github.com/tsunehikohongen-cpu/40chem-figures)`/data/`;
-  copy it to `data/` here), `data/NES_matrix_GO_BP_2023_40chemicals.csv`,
-  `data/Supplementary_Table_1_keyword_list.csv`. `gseapy` downloads the
-  `GO_Biological_Process_2023` library from Enrichr (internet required).
-- Run: `python scripts/Supplementary_Data_1_leading_edge.py`
-- Output: `output/Supplementary_Data_1_leading_edge.xlsx` and
-  `output/Supplementary_Data_1_leading_edge_per_gene.csv` (the files in `data/`
-  are the versions deposited with the manuscript).
-- Note: genes with exactly identical delta-rlog values (e.g. non-expressed genes)
-  have no defined order, so a re-run can differ from the deposited file in the
-  rank/label of such tied genes (about 2.5% of rows) and in the ES at peak
-  (by <= 0.004); delta-rlog and contribution values, gene-set sizes and
-  leading-edge sizes are identical.
+Archived as used for the manuscript; several scripts expect manually prepared inputs in `./inputs` and write to `./outputs`
+(see each script's header), so this is documentation rather than a one-command run. The numbering inside
+`run_gs1_gs2_analysis.py` ("GeneSet1 = Top150", "GeneSet2 = Top182") is the reverse of the manuscript (Gene Set 1 = 182-gene
+Wilcoxon set, Gene Set 2 = 150-gene INGOR set).
+`compute_cactus_features.py` computes the ten descriptors (No. 32 is 5-acetylsalicylic acid, given by explicit SMILES so that a name
+search cannot resolve it to aspirin); `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` train and evaluate LR / SVM / RF;
+`chem_level_metrics.py` and `nested_gene_selection.py` produce Supplementary Tables 9 and 10; `build_*_excel*.py` format result tables.
 
-### `scripts/Supplementary_Table_5_RDKit_descriptors.py` — Supplementary Table 5
-Checks that each of the 168 descriptor names of `data/Supplementary_Table_5_RDKit_descriptors.csv`
-exists in `rdkit.Chem.Descriptors` of the installed RDKit and writes the list to
-`output/Supplementary_Table_5_RDKit_descriptors.csv` (needs `rdkit`).
+## License and citation
 
-- Run: `python scripts/Supplementary_Table_5_RDKit_descriptors.py`
-
-### `scripts/ml_pipeline/` — model training and evaluation pipeline
-The end-to-end pipeline behind the classifier results (Supplementary Table 2),
-archived as used for the manuscript. Several scripts expect manually prepared
-inputs in `./inputs` and write to `./outputs` (see each script's header);
-this is an archive for transparency rather than a one-command reproduction.
-
-- `compute_cactus_features.py` — CACTUS-equivalent molecular descriptors (LogP,
-  TPSA, MW, QED, BBB heuristic, HBD/HBA, Brenk/PAINS alerts) for the 40
-  chemicals via PubChem + RDKit. No. 32 is
-  5-acetylsalicylic acid (SMILES `CC(=O)C1=CC(=C(C=C1)O)C(=O)O`), a different
-  compound from aspirin (No. 16); its SMILES is given explicitly so that a name search
-  cannot resolve it to aspirin.
-- `run_gs1_gs2_analysis.py`, `run_gs3_analysis.py` — LR / SVM / RF training and
-  cross-validation (StratifiedShuffleSplit, compound-level) for Gene Set 1
-  (182 genes), Gene Set 2 (150 genes) and Gene Set 3 (190 genes), in the
-  transcriptomics-only (Non-CACTUS) and multi-modal (CACTUS) settings. Note: the
-  internal labels in `run_gs1_gs2_analysis.py` ("GeneSet1 (Top150)", "GeneSet2
-  (Top182)") are the reverse of the manuscript numbering used here (Gene Set 1 =
-  182-gene Wilcoxon set, Gene Set 2 = 150-gene INGOR set).
-- `build_gs190_excel.py`, `build_integrated_excel_v6.py` — formatted Excel
-  summaries of the cross-validation metrics.
-- `requirements.txt` — pinned dependency versions for this pipeline (differs
-  from the top-level `requirements.txt`).
-
-## License
-
-See `LICENSE` (MIT) for the code. The data files are derived, aggregated results
-(NES values and per-gene leading-edge statistics); raw RNA-seq data are deposited
-in GEO under GSE345109.
-
-## Citing
-
-See `CITATION.cff` and the manuscript.
-
-
-## Reproducing Supplementary Table 10 (Gene Set 1 re-selected within training splits)
-Run `python nested_gene_selection.py` from `scripts/ml_pipeline`. Inputs are included in this repository:
-`data/nested_selection_inputs/` (log fold changes of the 1,000 candidate genes, and the INGOR/Wilcoxon rank-sum node tables for Label A and Label B)
-and `data/multisigma_inputs/CACTUS_GeneSet182_CV_folds/` (fold inputs; sample names in the `*_rowkey.csv` files).
-The output reproduces `results/leakage_sensitivity/nested_folds.csv` exactly. Gene Set 1 is selected with a two-sided Wilcoxon rank-sum (Mann–Whitney U) test,
-Benjamini–Hochberg FDR <= 0.01, over the 632 of the 1,000 candidate genes with a defined test result; every one of the 1,000 genes has at least one INGOR edge with score >= 0.5 (`data/nested_selection_inputs/1000_ECv_edges.tsv`), so the edge-score criterion does not change the selection.
+MIT (`LICENSE`). The data files are derived, aggregated results; raw RNA-seq data are deposited in GEO (GSE345109; released to reviewers
+on request). Citation: `CITATION.cff` and the manuscript.

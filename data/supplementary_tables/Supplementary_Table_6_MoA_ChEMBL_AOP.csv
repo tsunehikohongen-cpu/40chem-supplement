@@ -1,0 +1,36 @@
+﻿No.,Compound,Cat,ChEMBL primary MoA (target),Developmental AOP(s),Concordance
+1,Acitretin,Cat1,Retinoid receptor agonist (RAR),AOP:e7931d53 (RAR agonism → impaired neurodevelopment); AOP:9dcda04a (microphthalmia),Consistent
+2,Isotretinoin,Cat1,Retinoic acid receptor agonist (RAR),Same as above,Consistent
+3,Tretinoin,Cat1,Retinoic acid receptor agonist (RAR),Same as above,Consistent
+4,Busulfan,Cat1,DNA alkylating agent (DNA),"AOP:66789b03 (DNA damage → microcephaly, indirect)",Consistent
+5,Cyclophosphamide,Cat1,DNA alkylating agent (via acrolein) (DNA),Same as above,Consistent
+6,5-Fluorouracil,Cat1,Thymidylate synthase inhibitor (TYMS),No developmental AOP in AOP-Wiki,Consistent
+7,Hydroxyurea,Cat1,Ribonucleoside-diphosphate reductase inhibitor (RRM1),No developmental AOP in AOP-Wiki,Consistent
+8,Methotrexate,Cat1,Dihydrofolate reductase inhibitor (DHFR),No developmental AOP in AOP-Wiki,Consistent
+9,Cytarabine,Cat1,DNA polymerase inhibitor (POLA1),No developmental AOP in AOP-Wiki,Consistent
+10,Carbamazepine,Cat1,Sodium channel alpha subunit blocker (SCN),AOP:95d2a758 (Na-channel binding during development),Consistent
+11,Phenytoin,Cat1,Sodium channel alpha subunit blocker (SCN),Same as above,Consistent
+12,Topiramate,Cat1,Multi-target (Na+/GABA-A/AMPA/CA) (multi),Partial,Partially consistent
+13,Trimethadione,Cat1,T-type calcium channel blocker (CACNA1G),Same mechanism family,Consistent
+14,Valproic acid,Cat1,HDAC inhibitor; SSADH inhibitor (HDAC1/2),AOP:713c6ade (HDAC → craniofacial); AOP:2304b4c7 (HDAC → neural tube defects),Consistent (strongest AOP support)
+15,Thalidomide,Cat1,CRL4(CRBN) E3 ligase modulator (CRBN),No developmental AOP in AOP-Wiki (SALL4 pathway not yet AOP-indexed),Consistent
+16,Pomalidomide,Cat1,CRL4(CRBN) E3 ligase modulator (CRBN),Same as above,Consistent
+17,Aspirin,Cat1,Cyclooxygenase inhibitor (PTGS1/2),AOP:c67f02a3 (COX → reproductive failure); AOP:5a909aba,Consistent
+18,Ibuprofen,Cat1,Cyclooxygenase inhibitor (PTGS1/2),Same as above,Consistent
+19,Fluconazole,Cat1,Fungal CYP51 (lanosterol 14α-demethylase) inhibitor (ERG11/CYP51),No developmental AOP for CYP51 in AOP-Wiki,Consistent
+20,Vismodegib,Cat1,Smoothened (SMO) inhibitor (SMO),AOP:c8b2b3dd (SMO antagonism → orofacial clefting),Consistent (direct AOP match)
+21,Ibrutinib,Cat0,BTK inhibitor (BTK),No developmental AOP for BTK,Consistent (specific target)
+22,Pazopanib,Cat0,VEGFR/PDGFR/KIT multi-TK inhibitor (VEGFR2 primary),AOP:25c832e9 (VEGFR disruption → developmental defects),Consistent (VEGFR AOP)
+23,Ribavirin,Cat0,IMPDH inhibitor (IMPDH1/2),No developmental AOP,Consistent
+24,Tacrolimus,Cat0,FKBP1A/calcineurin inhibitor (FKBP1A),No developmental AOP,Consistent
+25,Bosentan,Cat0,Endothelin ET-A/ET-B receptor antagonist (EDNRA/B),No developmental AOP in AOP-Wiki (teratogen in rat),Consistent
+26,Cisplatin,Cat0,DNA crosslinking (Pt-DNA adducts) (DNA),Related to Alkylating AOPs,Consistent
+27,Dabrafenib,Cat0,BRAF (V600) kinase inhibitor (BRAF),No developmental AOP for BRAF,Consistent (specific target)
+28,Dasatinib,Cat0,Multi-TK inhibitor (BCR-ABL/SRC/KIT/EPHA2/PDGFRB) (multi),No single developmental AOP; polypharmacology,Consistent (multi-target)
+29,Imatinib,Cat0,BCR-ABL/KIT/PDGFR tyrosine kinase inhibitor (ABL1),No developmental AOP for BCR-ABL,Consistent
+30,Rotenone,Cat0,Mitochondrial complex I inhibitor (MT-ND),AOP:64c1bf34 (Complex I inhibition),Consistent
+31,Acetaminophen,Cat0,Cyclooxygenase inhibitor; FAAH inhibitor; TRPV1 modulator (PTGS2),AOP:c67f02a3 (COX reproductive failure),Consistent (OECD DNT IVB negative reference)
+32,5-Acetylsalicylic acid,Cat0,"Downregulates COX-2/PGE2 signalling, enhances PPAR-γ (research chemical; distinct from Aspir...",No developmental AOP in AOP-Wiki,Consistent (OECD DNT IVB negative reference)
+33,D-Glucitol,Cat0,No mechanism annotated (sugar alcohol),None,Consistent (no annotated MoA)
+34,L-Ascorbic acid,Cat0,Supplement (antioxidant cofactor),None,Consistent (no annotated MoA)
+35,Saccharin Sodium Salt hydrate,Cat0,No mechanism annotated (artificial sweetener),None,Consistent (no annotated MoA)

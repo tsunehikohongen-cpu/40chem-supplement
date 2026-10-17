@@ -1,0 +1,17 @@
+﻿Analysis / Group,n (within),n (between),Cliff’s δ,MWU P,Pperm
+"— Within-category analyses (Fig. 5c,d) —",,,,,
+Within Category 1: same-MoA vs different-MoA,18,172,+0.284,0.024,0.030
+Within Category 1: same-MoA vs different-MoA (mean difference +0.0495),18,172,—,—,0.042
+Within Category 0: same-MoA vs different-MoA,10,35,−0.417,0.978,0.949
+— Per-MoA coherence (Fig. 5e) —,,,,,
+Antimetabolite DNA synthesis,6 (n=4 chem.),104,+0.558,—,0.023
+Retinoid signalling,3 (n=3 chem.),78,+0.728,—,0.025
+Cyclooxygenase (COX) inhibition,1 (n=2 chem.),52,+0.857,—,0.077
+Cereblon IMiD,1 (n=2 chem.),52,+0.536,—,0.212
+Alkylating DNA damage,1 (n=2 chem.),52,+0.286,—,0.347
+Antiepileptic ion channel,6 (n=4 chem.),104,−0.186,—,0.766
+Kinase inhibitor,10 (n=5 chem.),125,+0.010,—,0.453
+— Three-way comparison (Fig. 5b) —,,,,,
+Same-MoA vs different-category,28,200,+0.184,0.058,0.196
+Same-category / different-MoA vs different-category,207,200,+0.031,0.297,0.805
+Same-MoA vs same-category / different-MoA,28,207,+0.147,0.104,0.191
