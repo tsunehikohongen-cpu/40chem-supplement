@@ -13,7 +13,7 @@ Companion repository (main-text figure scripts, expression matrix, Fig. 4 predic
 | Fig. 1 — NES heterogeneity (2,692 GO BP terms) | `scripts/Supplementary_Fig_1_NES_heterogeneity.py` |
 | Fig. 2 — PCA of RDKit descriptors | `scripts/Supplementary_Fig_2_RDKit_PCA.py`, `data/Supplementary_Fig_2_10_descriptors_40chemicals.csv`, `data/Supplementary_Fig_2_RDKit_descriptors_40chemicals.csv` |
 | Table 1 — keyword / ontology-root definitions | `data/Supplementary_Table_1_keyword_list.csv` |
-| Table 2 — performance of all model configurations | `data/supplementary_tables/Supplementary_Table_2_model_performance.csv`; ML rows recomputable from `data/multisigma_inputs/*_CV_folds/` (see below); NN: `results/multisigma_nn_evaluation/`; before/after the No. 32 descriptor correction: `data/Supplementary_Table_2_ML_multimodal_corrected.csv` |
+| Table 2 — performance of all model configurations | `data/supplementary_tables/Supplementary_Table_2_model_performance.csv`; ML rows recomputable from `data/multisigma_inputs/*_CV_folds/` (see below); NN: `results/multisigma_nn_evaluation/{multimodal,transcriptomics}/`; before/after the No. 32 descriptor correction: `data/Supplementary_Table_2_ML_multimodal_corrected.csv` |
 | Table 3 — exposure conditions | `data/supplementary_tables/Supplementary_Table_3_exposure_conditions.csv` |
 | Table 4 — leading-edge term overview | `data/supplementary_tables/Supplementary_Table_4_leading_edge_term_overview.csv` |
 | Data 1 — gene-level leading-edge attribution | `data/Supplementary_Data_1_leading_edge.xlsx`, `data/Supplementary_Data_1_leading_edge_per_gene.csv`, `scripts/Supplementary_Data_1_leading_edge.py` |
