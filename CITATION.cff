@@ -4,7 +4,7 @@ title: "40chem-supplement: supplementary data and analysis code for the 40-chemi
 authors:
   - family-names: "Hongen"
     given-names: "Tsunehiko"
-version: 2.0.0
-date-released: "2026-10-09"
+version: 1.0.0
+date-released: "2026-10-19"
 license: MIT
 repository-code: "https://github.com/tsunehikohongen-cpu/40chem-supplement"
