@@ -95,4 +95,4 @@ search cannot resolve it to aspirin); `run_gs1_gs2_analysis.py`, `run_gs3_analys
 ## License and citation
 
 MIT (`LICENSE`). The data files are derived, aggregated results; raw RNA-seq data are deposited in GEO (GSE345109; released to reviewers
-on request). Citation: `CITATION.cff` and the manuscript.
+on request). Archived at Zenodo: [10.5281/zenodo.23466590](https://doi.org/10.5281/zenodo.23466590) (concept DOI, always the latest version). Citation: `CITATION.cff` and the manuscript.
